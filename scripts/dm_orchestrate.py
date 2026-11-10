@@ -226,7 +226,8 @@ def apply_reply(workspace: Path, reply: str, dry_run: bool = False) -> Tuple[Lis
             content += "\n"
         if not dry_run:
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(content, encoding="utf-8", newline="\n")
+            with target.open("w", encoding="utf-8", newline="\n") as handle:    # write_text(newline=) needs Python 3.10
+                handle.write(content)
             drop_stale_bytecode(target)
         changed.append(target.relative_to(workspace.resolve()).as_posix())
     for name in DELETE_RE.findall(reply):

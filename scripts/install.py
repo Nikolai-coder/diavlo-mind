@@ -193,7 +193,9 @@ class Installer:
             self.log(f"set {source.stem} model to {model}")
             if not self.args.dry_run:
                 target = self.skill_dir / "agents" / source.name
-                target.write_text(set_model(target.read_text(encoding="utf-8"), model), encoding="utf-8", newline="\n")
+                updated = set_model(target.read_text(encoding="utf-8"), model)
+                with target.open("w", encoding="utf-8", newline="\n") as handle:   # write_text(newline=) needs Python 3.10
+                    handle.write(updated)
 
     def native_agents(self) -> List[str]:
         """Write host-native subagent definitions next to the skill. Returns the paths written."""
@@ -215,7 +217,8 @@ class Installer:
             self.log(f"write agent {target}")
             if not self.args.dry_run:
                 target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_text(content, encoding="utf-8", newline="\n")
+                with target.open("w", encoding="utf-8", newline="\n") as handle:
+                    handle.write(content)
             written.append(str(target))
         return written
 

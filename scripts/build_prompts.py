@@ -164,7 +164,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 1 if stale or problems else 0
 
     for path in stale:
-        path.write_text(contents[path], encoding="utf-8", newline="\n")
+        with path.open("w", encoding="utf-8", newline="\n") as handle:      # write_text(newline=) needs Python 3.10
+            handle.write(contents[path])
         print(f"wrote {path.relative_to(ROOT).as_posix()}")
     if not stale:
         print("nothing to do")
