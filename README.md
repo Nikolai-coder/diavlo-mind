@@ -203,7 +203,7 @@ The framework was designed in a session configured for the model `claude-fable-5
 ## Status
 
 - **Implemented:** everything in the table "What is in the box".
-- **Verified by execution:** repository validation, the unit tests, the benchmark self-test and packaging on Linux, macOS and Windows (CI, Python 3.13); loading in Claude Code 2.1.322 on Linux; two live demonstrations; and the 96-run pilot benchmark.
+- **Verified by execution:** repository validation, the unit tests, the benchmark self-test and packaging on Linux, macOS and Windows (CI, Python 3.13, plus Python 3.9 on Linux); loading in Claude Code 2.1.322 on Linux; two live demonstrations; and the 96-run pilot benchmark.
 - **Not verified:** live calls to the Claude, OpenAI and Gemini APIs; installation in Codex, Gemini CLI, Antigravity, ChatGPT and claude.ai; installing into Claude Code on Windows and macOS (the scripts and tests pass there, the install itself was not tried).
 - **Proposed, not built:** a tool-calling loop for the API adapters, judged scoring of architecture and creative quality, and hooks that enforce the rules mechanically.
 

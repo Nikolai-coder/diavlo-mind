@@ -24,7 +24,7 @@ First release: the Fable Edition.
 
 ### Verified in this release
 
-- Repository validation, unit tests, benchmark self-test and packaging pass on Linux, macOS and Windows with Python 3.13 in CI (commands in `INSTALL.md`, section 4).
+- Repository validation, unit tests, benchmark self-test and packaging pass in CI on Linux, macOS and Windows with Python 3.13, and on Linux with Python 3.9, the oldest version supported (commands in `INSTALL.md`, section 4). The first Python 3.9 run failed 14 of 98 tests: the installer, prompt builder and orchestrator passed `newline=` to `Path.write_text()`, which needs Python 3.10. Fixed before the release.
 - The skill, plugin and marketplace manifest load in Claude Code 2.1.322.
 - Pilot benchmark, 96 runs on two small models with and without the framework. On the older model the framework arm solved 18 of 24 runs against 14 of 24 (not statistically established, p = 0.22); on the newer model both arms were at the ceiling and the framework cost 28% more. Full results, failures of the framework arm and limits in `evaluation/results/RESULTS.md`.
 

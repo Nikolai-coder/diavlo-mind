@@ -205,7 +205,7 @@ El método se diseñó en una sesión configurada para el modelo `claude-fable-5
 ## Estado
 
 - **Implementado:** todo lo de la tabla «Qué hay dentro».
-- **Verificado ejecutándolo:** la validación del repositorio, los tests unitarios, el autotest del benchmark y el empaquetado en Linux, macOS y Windows (CI, Python 3.13); la carga en Claude Code 2.1.322 en Linux; dos demostraciones reales; y el benchmark piloto de 96 ejecuciones.
+- **Verificado ejecutándolo:** la validación del repositorio, los tests unitarios, el autotest del benchmark y el empaquetado en Linux, macOS y Windows (CI, Python 3.13, y además Python 3.9 en Linux); la carga en Claude Code 2.1.322 en Linux; dos demostraciones reales; y el benchmark piloto de 96 ejecuciones.
 - **No verificado:** llamadas reales a las API de Claude, OpenAI y Gemini; la instalación en Codex, Gemini CLI, Antigravity, ChatGPT y claude.ai; la instalación en Claude Code sobre Windows y macOS (los scripts y los tests pasan ahí, la instalación en sí no se probó).
 - **Propuesto, no construido:** un bucle con llamadas a herramientas para los adaptadores de API, la puntuación con juez de la calidad de arquitectura y de la parte creativa, y hooks que hagan cumplir las reglas de forma mecánica.
 

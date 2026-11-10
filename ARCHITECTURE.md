@@ -180,7 +180,7 @@ everything listed in section 3.
 |---|---|
 | The repository is internally consistent | `python scripts/validate.py` |
 | Every script behaves as documented | `python -m unittest discover -s tests` |
-| The scripts and tests run on Linux, macOS and Windows | CI workflow `.github/workflows/validate.yml`, first run on 2026-11-10 with Python 3.13 |
+| The scripts and tests run on Linux, macOS and Windows | CI workflow `.github/workflows/validate.yml`, runs of 2026-11-10: Python 3.13 on the three systems and Python 3.9 on Linux |
 | The benchmark checks discriminate | `python evaluation/selftest.py` |
 | The skill, the plugin and the marketplace manifest load in Claude Code | `claude plugin validate`, `claude plugin list`, `claude plugin details`, recorded in `adapters/claude-code.md` |
 | The skill is followed in a live session and its report matches reality | `examples/01-claude-code-skill/` |
