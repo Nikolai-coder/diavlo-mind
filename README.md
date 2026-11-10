@@ -133,7 +133,7 @@ How to read it:
 - On the older model the direction favours the framework, mostly on the debugging and error-recovery tasks. With 24 pairs this could still be chance. It is a reason to run more trials, not a result to quote.
 - On the newer model there was nothing left to gain on this suite, and the framework cost 28% more.
 - All 96 runs ended by claiming the task complete. The framework lowered the number of failed runs on the older model from 10 to 6. It did not make a single failing run admit it.
-- With the framework, the older model still left no written handoff between two sessions in 3 of 3 runs. That failure and three others are recorded as open in the improvement log.
+- With the framework, the older model still left no written handoff between two sessions in 3 of 3 runs. That failure and three others are recorded as open in `evaluation/improvement/`.
 - Four hidden checks turned out stricter than their task text and were corrected during the pilot. One run changed outcome, in favour of the framework arm; both figures are published.
 - Not run: a stronger reference model, any non-Claude model, and the skill's on-demand procedures and subagents (the benchmark applies one prompt tier).
 
@@ -179,7 +179,7 @@ The tool refuses to mark a task done without evidence, to start one before its d
 No. Instructions change what a model is asked to do, not what it can do. The benchmark above is the honest size of the effect, including the cases where there was none.
 
 **Which models can use it, and on which was it measured?**
-Any model that follows written instructions: Claude models of every size, GPT models, Gemini models and local models, through the routes in the table above. It was measured on two only, `claude-haiku-4-5` and `claude-haiku-5-5`. Larger Claude models, GPT and Gemini models were not measured; expect a smaller effect the stronger the model already is, as the second row of the results suggests.
+Any model that follows written instructions: Claude models of every size, GPT models, Gemini models and local models, through the routes in the table above. It was measured on two only, `claude-haiku-4-5` and `claude-haiku-5-5`. Larger Claude models, GPT and Gemini models were not measured. The second row of the results suggests that the effect shrinks as the model gets stronger; that is a hypothesis, not a measurement.
 
 **Is it a leaked system prompt or a jailbreak?**
 No. It was written from scratch as observable procedures: read this, run that, write this down, report in this form. It does not ask a model to reveal private reasoning and does not try to remove any safeguard.

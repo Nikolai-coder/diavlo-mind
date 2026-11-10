@@ -135,7 +135,7 @@ Cómo leerlo:
 - En el modelo antiguo la dirección favorece al método, sobre todo en las tareas de depuración y de recuperación de errores. Con 24 pares todavía puede ser azar. Es un motivo para hacer más repeticiones, no un resultado que citar.
 - En el modelo nuevo no quedaba nada que ganar en este conjunto de tareas, y el método costó un 28 % más.
 - Las 96 ejecuciones acabaron declarando la tarea completa. El método bajó el número de ejecuciones fallidas en el modelo antiguo de 10 a 6. No consiguió que una sola ejecución fallida lo reconociera.
-- Con el método, el modelo antiguo siguió sin dejar un traspaso escrito entre dos sesiones en 3 de 3 ejecuciones. Ese fallo y otros tres están registrados como abiertos.
+- Con el método, el modelo antiguo siguió sin dejar un traspaso escrito entre dos sesiones en 3 de 3 ejecuciones. Ese fallo y otros tres están registrados como abiertos en `evaluation/improvement/`.
 - Cuatro comprobaciones ocultas resultaron más estrictas que el texto de su tarea y se corrigieron durante el piloto. Una ejecución cambió de resultado, a favor del método; se publican las dos cifras.
 - No se ejecutó: un modelo de referencia más fuerte, ningún modelo que no sea Claude, ni los procedimientos bajo demanda y los subagentes de la skill (el benchmark aplica un único nivel de prompt).
 
@@ -181,7 +181,7 @@ La herramienta se niega a marcar una tarea como hecha sin evidencia, a empezarla
 No. Las instrucciones cambian lo que se le pide a un modelo, no lo que puede hacer. El benchmark de arriba es el tamaño real del efecto, incluidos los casos en que no hubo ninguno.
 
 **¿Qué modelos pueden usarlo y en cuáles se midió?**
-Cualquier modelo que siga instrucciones escritas: modelos Claude de cualquier tamaño, modelos GPT, modelos Gemini y modelos locales, por las vías de la tabla de arriba. Solo se midió en dos, `claude-haiku-4-5` y `claude-haiku-5-5`. Los modelos Claude más grandes, GPT y Gemini no se midieron; es de esperar un efecto menor cuanto más fuerte sea ya el modelo, como sugiere la segunda fila de los resultados.
+Cualquier modelo que siga instrucciones escritas: modelos Claude de cualquier tamaño, modelos GPT, modelos Gemini y modelos locales, por las vías de la tabla de arriba. Solo se midió en dos, `claude-haiku-4-5` y `claude-haiku-5-5`. Los modelos Claude más grandes, GPT y Gemini no se midieron. La segunda fila de los resultados sugiere que el efecto se reduce cuanto más fuerte es el modelo; es una hipótesis, no una medición.
 
 **¿Es un prompt de sistema filtrado o un jailbreak?**
 No. Está escrito desde cero como procedimientos observables: lee esto, ejecuta aquello, anótalo, informa con este formato. No pide a ningún modelo que revele su razonamiento privado ni intenta quitar ninguna protección.
