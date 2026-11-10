@@ -1,0 +1,14 @@
+{
+  "total_rows": 44,
+  "accepted": 24,
+  "rejected": 20,
+  "by_reason": {
+    "wrong_column_count": 2,
+    "missing_id": 1,
+    "invalid_id": 4,
+    "duplicate_id": 2,
+    "invalid_email": 5,
+    "invalid_date": 3,
+    "invalid_balance": 3
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "research-kestrel",
+  "category": "research",
+  "title": "Answer nine questions from a local corpus with outdated, conflicting and missing information",
+  "timeout_seconds": 900,
+  "requirements": [
+    {"id": "R1", "text": "Q1 default port in 3.2, from an official source"},
+    {"id": "R2", "text": "Q2 default max_batch_size in 3.2, resolving the conflict between official sources by recency"},
+    {"id": "R3", "text": "Q3 whether kestrel.sync is usable on 3.2"},
+    {"id": "R4", "text": "Q4 minimum Python version for 3.2"},
+    {"id": "R5", "text": "Q5 a setting no source mentions is reported as UNKNOWN"},
+    {"id": "R6", "text": "Q6 contradictory community claims are reported as UNKNOWN"},
+    {"id": "R7", "text": "Q7 the flag that replaces --tls-cert"},
+    {"id": "R8", "text": "Q8 default maximum number of connections"},
+    {"id": "R9", "text": "Q9 a single community claim is reported as unconfirmed, not as confirmed"},
+    {"id": "R10", "text": "answers.json has the required shape and cites only files that exist"}
+  ],
+  "stages": [
+    {"id": "main", "prompt": "prompt.md", "workspace": "main", "seed": "workspace"}
+  ],
+  "check_workspace": "main"
+}

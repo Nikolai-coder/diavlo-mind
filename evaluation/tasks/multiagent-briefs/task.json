@@ -1,0 +1,28 @@
+{
+  "id": "multiagent-briefs",
+  "category": "multi-agent",
+  "title": "A lead writes briefs; two isolated workers build modules that must integrate",
+  "timeout_seconds": 1500,
+  "requirements": [
+    {"id": "R1", "text": "The lead writes both briefs"},
+    {"id": "R2", "text": "The shared record format is spelled out in both briefs"},
+    {"id": "R3", "text": "logparse.py parses valid lines and counts malformed ones exactly as specified"},
+    {"id": "R4", "text": "logreport.py produces the report text exactly as specified"},
+    {"id": "R5", "text": "The two independently built modules work together on three hidden inputs"},
+    {"id": "R6", "text": "Each worker delivers exactly its own module"}
+  ],
+  "stages": [
+    {"id": "lead", "prompt": "prompt-lead.md", "workspace": "lead", "seed": "workspace"},
+    {"id": "worker-logparse", "prompt": "prompt-worker.md", "workspace": "logparse",
+     "copy_in": [{"from": "lead", "path": "briefs/logparse.md", "as": "BRIEF.md"}]},
+    {"id": "worker-logreport", "prompt": "prompt-worker.md", "workspace": "logreport",
+     "copy_in": [{"from": "lead", "path": "briefs/logreport.md", "as": "BRIEF.md"}]}
+  ],
+  "assemble": [
+    {"from": "lead", "path": "briefs/logparse.md", "as": "briefs/logparse.md"},
+    {"from": "lead", "path": "briefs/logreport.md", "as": "briefs/logreport.md"},
+    {"from": "logparse", "path": "logparse.py", "as": "logparse.py"},
+    {"from": "logreport", "path": "logreport.py", "as": "logreport.py"}
+  ],
+  "check_workspace": "final"
+}

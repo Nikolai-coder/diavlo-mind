@@ -1,0 +1,24 @@
+{
+  "type": "result",
+  "id": "T1",
+  "role": "executor",
+  "status": "DONE",
+  "summary": "Added --since parsing (argparse type) and filtering in select(), with 8 new tests.",
+  "deliverables": ["export.py", "tests/test_export.py"],
+  "evidence": [
+    {"requirement": "R1", "status": "met", "level": "VERIFIED", "proof": "python export.py orders.csv --since 2024-02-01 -> 3 rows, exit 0"},
+    {"requirement": "R2", "status": "met", "level": "VERIFIED", "proof": "python export.py orders.csv --since 2024-13-01 -> error message, exit 2"},
+    {"requirement": "R4", "status": "met", "level": "VERIFIED", "proof": "python -m unittest discover -s tests -> 12 passed (4 pre-existing)"}
+  ],
+  "changes": [
+    {"path": "export.py", "action": "modified"},
+    {"path": "tests/test_export.py", "action": "modified"}
+  ],
+  "issues": [
+    {"severity": "minor", "where": "README.md", "finding": "--since is not documented", "suggestion": "task T2 covers it; outside my writable paths"},
+    {"severity": "note", "where": "export.py", "finding": "a malformed date inside the CSV raises ValueError when --since is used", "suggestion": "decide whether bad rows should be reported"}
+  ],
+  "assumptions": ["--since is inclusive of the given day"],
+  "open_questions": [],
+  "next": "T2 (document the option) can start."
+}

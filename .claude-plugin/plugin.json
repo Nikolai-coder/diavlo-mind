@@ -1,0 +1,23 @@
+{
+  "name": "diavlo-mind",
+  "displayName": "DIAVLO MIND",
+  "version": "1.0.0",
+  "description": "Agent operating framework: requirement tracking, four effort modes, 20 procedures, 8 specialist agents, project-state checkpoints and evidence-based completion reports.",
+  "author": {
+    "name": "Diavlo"
+  },
+  "homepage": "https://github.com/Nikolai-coder/diavlo-mind",
+  "repository": "https://github.com/Nikolai-coder/diavlo-mind",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "workflow",
+    "multi-agent",
+    "subagents",
+    "planning",
+    "verification",
+    "code-review",
+    "project-management",
+    "prompt-engineering"
+  ]
+}

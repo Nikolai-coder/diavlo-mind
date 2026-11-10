@@ -1,0 +1,80 @@
+name: Benchmark result
+description: Share a benchmark run on a model or environment, whatever the outcome.
+title: "[benchmark] "
+labels: ["benchmark-result"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Results that show no effect or a negative effect are as useful as positive ones.
+        How to run the suite: `evaluation/README.md`.
+  - type: input
+    id: version
+    attributes:
+      label: DIAVLO MIND version
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      description: Exact model id as the provider reports it.
+    validations:
+      required: true
+  - type: dropdown
+    id: runner
+    attributes:
+      label: Runner
+      options:
+        - claude-code
+        - orchestrate
+        - command
+    validations:
+      required: true
+  - type: input
+    id: arms
+    attributes:
+      label: Arms and prompt tier
+      description: For example "baseline and diavlo-mind, standard tier".
+    validations:
+      required: true
+  - type: input
+    id: trials
+    attributes:
+      label: Trials per task and arm
+      placeholder: "3"
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact command
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: SUMMARY.md
+      description: Paste the file written by evaluation/score.py.
+    validations:
+      required: true
+  - type: textarea
+    id: comparison
+    attributes:
+      label: compare_runs.py output (if you ran two arms)
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything that affects how the numbers should be read
+      description: Interrupted runs, rate limits, changed timeouts, modified tasks or checks.
+  - type: checkboxes
+    id: integrity
+    attributes:
+      label: Integrity
+      options:
+        - label: The tasks and their checks were not modified, or every modification is described above.
+          required: true
+        - label: evaluation/selftest.py passed on the machine that ran the benchmark.
+          required: true

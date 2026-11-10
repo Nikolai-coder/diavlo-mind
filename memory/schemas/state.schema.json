@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Nikolai-coder/diavlo-mind/memory/schemas/state.schema.json",
+  "title": "DIAVLO MIND project state (.diavlo-mind/state.json)",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "objective",
+    "mode",
+    "created",
+    "updated",
+    "definition_of_done",
+    "requirements",
+    "tasks",
+    "decisions",
+    "checkpoints"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "project": {
+      "type": "string"
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "FAST",
+        "STANDARD",
+        "DEEP",
+        "AUTONOMOUS"
+      ]
+    },
+    "created": {
+      "type": "string"
+    },
+    "updated": {
+      "type": "string"
+    },
+    "definition_of_done": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "text",
+          "type",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^R[0-9]+$"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "functional",
+              "constraint",
+              "format",
+              "quality",
+              "process"
+            ]
+          },
+          "source": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "met",
+              "unmet",
+              "waived"
+            ]
+          },
+          "evidence": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "owner",
+          "status",
+          "depends_on",
+          "requirements"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^T[0-9]+$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner": {
+            "enum": [
+              "architect",
+              "planner",
+              "executor",
+              "researcher",
+              "reviewer",
+              "validator",
+              "optimizer",
+              "orchestrator"
+            ]
+          },
+          "status": {
+            "enum": [
+              "todo",
+              "doing",
+              "review",
+              "done",
+              "blocked",
+              "dropped"
+            ]
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^T[0-9]+$"
+            }
+          },
+          "requirements": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^R[0-9]+$"
+            }
+          },
+          "acceptance": {
+            "type": "string"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "milestone": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "attempts": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "date",
+          "decision"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^D[0-9]+$"
+          },
+          "date": {
+            "type": "string"
+          },
+          "decision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "why": {
+            "type": "string"
+          },
+          "alternatives": {
+            "type": "string"
+          },
+          "revisit_if": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "checkpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "time",
+          "summary"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^C[0-9]+$"
+          },
+          "time": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "next": {
+            "type": "string"
+          },
+          "open_questions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

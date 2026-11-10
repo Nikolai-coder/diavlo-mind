@@ -1,0 +1,22 @@
+RESULT PACKET
+id: T1
+role: executor
+status: DONE
+summary: Added --since parsing (argparse type) and filtering in select(), with 8 new tests.
+deliverables:
+  - export.py
+  - tests/test_export.py
+evidence:
+  - R1: met — VERIFIED — python export.py orders.csv --since 2024-02-01 -> 3 rows, exit 0
+  - R2: met — VERIFIED — python export.py orders.csv --since 2024-13-01 -> error message, exit 2
+  - R4: met — VERIFIED — python -m unittest discover -s tests -> 12 passed (4 pre-existing)
+changes:
+  - export.py (modified)
+  - tests/test_export.py (modified)
+issues:
+  - minor — README.md — --since is not documented — task T2 covers it; outside my writable paths
+  - note — export.py — a malformed date inside the CSV raises ValueError when --since is used — decide whether bad rows should be reported
+assumptions:
+  - --since is inclusive of the given day
+open_questions: none
+next: T2 (document the option) can start.

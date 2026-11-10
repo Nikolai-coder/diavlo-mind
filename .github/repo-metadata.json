@@ -1,0 +1,39 @@
+{
+  "name": "diavlo-mind",
+  "description": "Agent Skill and prompt framework for Claude Code, Codex, Gemini CLI and any LLM: planning, verification, multi-agent roles, project memory and a benchmark that measures what it changes.",
+  "homepage": "",
+  "visibility": "public",
+  "topics": [
+    "agent-skills",
+    "claude-code",
+    "claude-skills",
+    "claude-code-plugin",
+    "ai-agents",
+    "multi-agent",
+    "subagents",
+    "agentic-workflow",
+    "agent-framework",
+    "prompt-engineering",
+    "system-prompt",
+    "context-engineering",
+    "llm",
+    "llm-evaluation",
+    "benchmark",
+    "codex",
+    "chatgpt",
+    "gemini-cli",
+    "openai",
+    "anthropic"
+  ],
+  "features": {
+    "issues": true,
+    "discussions": false,
+    "wiki": false,
+    "projects": false
+  },
+  "social_preview": "assets/social-preview.png",
+  "release": {
+    "title": "DIAVLO MIND {version} — Fable Edition",
+    "assets": ["dist/DIAVLO-MIND-FABLE-EDITION.zip", "dist/diavlo-mind.zip", "dist/SHA256SUMS.txt"]
+  }
+}

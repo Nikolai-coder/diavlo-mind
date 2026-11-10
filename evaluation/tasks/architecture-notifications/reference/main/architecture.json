@@ -1,0 +1,285 @@
+{
+  "components": [
+    {
+      "id": "api",
+      "responsibility": "Accepts notification requests over HTTP, validates them and stores each one exactly once per idempotency key.",
+      "depends_on": [
+        "store",
+        "audit"
+      ],
+      "satisfies": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "scheduler",
+      "responsibility": "Decides when a notification becomes due by applying the user's channel preferences and quiet hours.",
+      "depends_on": [
+        "store",
+        "audit"
+      ],
+      "satisfies": [
+        "R2"
+      ]
+    },
+    {
+      "id": "dispatcher",
+      "responsibility": "Claims due notifications, sends them through a channel adapter and schedules retries or dead-lettering.",
+      "depends_on": [
+        "store",
+        "rate-limiter",
+        "channel-adapters",
+        "audit"
+      ],
+      "satisfies": [
+        "R1",
+        "R4",
+        "R7"
+      ]
+    },
+    {
+      "id": "rate-limiter",
+      "responsibility": "Grants send permits per provider from a token bucket shared by all dispatcher processes.",
+      "depends_on": [
+        "store"
+      ],
+      "satisfies": [
+        "R5"
+      ]
+    },
+    {
+      "id": "channel-adapters",
+      "responsibility": "Translates a notification into one provider call for email, SMS or push and classifies the outcome.",
+      "depends_on": [],
+      "satisfies": [
+        "R1"
+      ]
+    },
+    {
+      "id": "store",
+      "responsibility": "Owns the PostgreSQL schema: notifications, attempts, preferences, dead letters and token buckets.",
+      "depends_on": [],
+      "satisfies": [
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "audit",
+      "responsibility": "Appends one immutable row per state change and answers queries by notification id.",
+      "depends_on": [
+        "store"
+      ],
+      "satisfies": [
+        "R6"
+      ]
+    },
+    {
+      "id": "ops-console",
+      "responsibility": "Exposes queue depth, failure rates and oldest pending age, and lets operators inspect and replay dead letters.",
+      "depends_on": [
+        "store",
+        "audit"
+      ],
+      "satisfies": [
+        "R4",
+        "R8"
+      ]
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "POST /notifications",
+      "provider": "api",
+      "consumers": [
+        "external"
+      ],
+      "input": "JSON: idempotency_key, user_id, channel (email|sms|push), template, params, urgent (bool)",
+      "output": "202 with notification_id and status; a repeated idempotency_key returns 200 with the original notification_id",
+      "errors": [
+        "400 invalid payload or unknown channel",
+        "503 database unavailable (nothing stored, caller may retry with the same key)"
+      ]
+    },
+    {
+      "name": "claim_due(limit, now)",
+      "provider": "store",
+      "consumers": [
+        "dispatcher"
+      ],
+      "input": "maximum number of rows and the current time",
+      "output": "notifications with status pending and due_at <= now, locked with FOR UPDATE SKIP LOCKED and marked sending",
+      "errors": [
+        "database unavailable: the dispatcher sleeps and retries, no row changes state"
+      ]
+    },
+    {
+      "name": "acquire(provider, permits)",
+      "provider": "rate-limiter",
+      "consumers": [
+        "dispatcher"
+      ],
+      "input": "provider name and number of permits wanted",
+      "output": "number of permits granted now and the wait in milliseconds until the next one",
+      "errors": [
+        "unknown provider",
+        "database unavailable: fails closed, zero permits granted"
+      ]
+    },
+    {
+      "name": "send(notification)",
+      "provider": "channel-adapters",
+      "consumers": [
+        "dispatcher"
+      ],
+      "input": "channel, recipient address, rendered content and the notification id as the provider idempotency token",
+      "output": "DeliveryResult with provider message id",
+      "errors": [
+        "TransientError: retry with backoff",
+        "PermanentError: dead-letter immediately",
+        "ProviderRateLimited: retry after the stated delay"
+      ]
+    },
+    {
+      "name": "record(notification_id, from_state, to_state, detail)",
+      "provider": "audit",
+      "consumers": [
+        "api",
+        "scheduler",
+        "dispatcher",
+        "ops-console"
+      ],
+      "input": "notification id, previous and new state, free-text detail",
+      "output": "none; the row is written in the caller's transaction",
+      "errors": [
+        "database error: the caller's transaction rolls back, so a state change is never left unrecorded"
+      ]
+    },
+    {
+      "name": "GET /ops/metrics and POST /ops/dead-letters/{id}/replay",
+      "provider": "ops-console",
+      "consumers": [
+        "external"
+      ],
+      "input": "none for metrics; a dead-letter id for replay",
+      "output": "queue depth, failure rate per channel, oldest pending age; replay returns the new notification state",
+      "errors": [
+        "404 unknown dead letter",
+        "409 dead letter already replayed"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D1",
+      "question": "How are pending notifications queued?",
+      "options": [
+        "PostgreSQL table claimed with FOR UPDATE SKIP LOCKED",
+        "PostgreSQL LISTEN/NOTIFY without a table",
+        "External message broker such as RabbitMQ"
+      ],
+      "chosen": "PostgreSQL table claimed with FOR UPDATE SKIP LOCKED",
+      "rationale": "C2 forbids a broker. A table survives restarts, and SKIP LOCKED lets several workers claim rows without blocking each other; 50 rows per second is far below what one PostgreSQL instance handles.",
+      "tradeoffs": "Workers poll, so there is up to one polling interval of delay, and the table needs vacuuming and archiving.",
+      "revisit_if": "Sustained load passes about 500 notifications per second or the service must run on more than one host."
+    },
+    {
+      "id": "D2",
+      "question": "Where does rate limiting live?",
+      "options": [
+        "Token bucket row per provider in PostgreSQL",
+        "In-process limiter inside each worker",
+        "Fixed sleep between sends"
+      ],
+      "chosen": "Token bucket row per provider in PostgreSQL",
+      "rationale": "Several dispatcher processes share one limit, so the bucket must be shared; a row updated under a row lock is exact and needs no new infrastructure.",
+      "tradeoffs": "One short extra transaction per batch of sends, and the limiter fails closed when the database is down.",
+      "revisit_if": "Lock contention on the bucket row shows up in the latency measurements."
+    },
+    {
+      "id": "D3",
+      "question": "How is the idempotency guarantee enforced?",
+      "options": [
+        "Unique index on idempotency_key with INSERT ... ON CONFLICT DO NOTHING",
+        "Check-then-insert in application code",
+        "Hash of the payload as the key"
+      ],
+      "chosen": "Unique index on idempotency_key with INSERT ... ON CONFLICT DO NOTHING",
+      "rationale": "The database is the only place where two concurrent requests with the same key are guaranteed to collide.",
+      "tradeoffs": "Keys are kept forever unless a retention job removes old ones, and callers must generate stable keys.",
+      "revisit_if": "The key table grows beyond what the VM's disk can hold within the retention period."
+    },
+    {
+      "id": "D4",
+      "question": "What is the process model on the single VM?",
+      "options": [
+        "One API process and four dispatcher processes under systemd",
+        "A single asyncio process for everything",
+        "Celery workers"
+      ],
+      "chosen": "One API process and four dispatcher processes under systemd",
+      "rationale": "Fits 4 vCPU (C1), restarts are handled by systemd, and plain processes are easy for a two-person Python team (C3) to debug.",
+      "tradeoffs": "No automatic scaling; capacity is changed by editing a unit file.",
+      "revisit_if": "The VM constraint is lifted or CPU saturation appears below the target load."
+    }
+  ],
+  "requirement_map": {
+    "R1": [
+      "api",
+      "dispatcher",
+      "channel-adapters"
+    ],
+    "R2": [
+      "scheduler"
+    ],
+    "R3": [
+      "api",
+      "store"
+    ],
+    "R4": [
+      "dispatcher",
+      "store",
+      "ops-console"
+    ],
+    "R5": [
+      "rate-limiter"
+    ],
+    "R6": [
+      "audit"
+    ],
+    "R7": [
+      "dispatcher"
+    ],
+    "R8": [
+      "ops-console"
+    ]
+  },
+  "constraints": {
+    "C1": "Everything runs as five systemd services on the one VM; there are no cloud services and no orchestrator, and the worker count is sized for 4 vCPU.",
+    "C2": "PostgreSQL holds the queue, the token buckets, the audit log and the dead letters; no broker or second datastore is introduced.",
+    "C3": "All components are Python processes using one web framework and one database driver, small enough for two developers to own."
+  },
+  "risks": [
+    {
+      "risk": "The queue table bloats and polling slows down under sustained load.",
+      "mitigation": "Partial index on (status, due_at), nightly archiving of delivered rows, tuned autovacuum.",
+      "validation": "Two-hour load test at 50 notifications per second measuring p99 time to hand-off and table size."
+    },
+    {
+      "risk": "A provider outage turns into a retry storm that starves healthy channels.",
+      "mitigation": "Exponential backoff with jitter, a per-channel circuit breaker and separate claim queries per channel.",
+      "validation": "Fault-injection test where the SMS adapter fails every call for ten minutes while email latency is measured."
+    },
+    {
+      "risk": "A worker dies after the provider accepted a message but before the result was committed, causing a duplicate on retry.",
+      "mitigation": "The notification id is passed as the provider's idempotency token, and rows stuck in sending are reconciled on restart.",
+      "validation": "Kill -9 test during sends against a fake provider that counts deliveries per token."
+    },
+    {
+      "risk": "Quiet hours are computed in the wrong time zone or across a daylight-saving change.",
+      "mitigation": "Store the user's IANA time zone, compute due_at in UTC with zoneinfo.",
+      "validation": "Unit tests on both daylight-saving transitions for three time zones."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "debugging-inventory",
+  "category": "debugging",
+  "title": "Five reported defects in a small inventory package, one with a failing test",
+  "timeout_seconds": 1200,
+  "requirements": [
+    {"id": "R1", "text": "restock adds to the existing quantity"},
+    {"id": "R2", "text": "Separate Inventory objects do not share items"},
+    {"id": "R3", "text": "CSV export stays parseable when a name contains commas or quotes"},
+    {"id": "R4", "text": "low_stock includes items exactly at the threshold"},
+    {"id": "R5", "text": "Discounts round half up to the nearest cent"},
+    {"id": "R6", "text": "The whole test suite passes"},
+    {"id": "R7", "text": "A regression test exists for each of the five defects"},
+    {"id": "R8", "text": "The public API is unchanged"},
+    {"id": "R9", "text": "Changes are minimal: modules are not rewritten and existing tests are kept"}
+  ],
+  "stages": [
+    {"id": "main", "prompt": "prompt.md", "workspace": "main", "seed": "workspace"}
+  ],
+  "check_workspace": "main"
+}

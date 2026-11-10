@@ -1,0 +1,24 @@
+{"id": 1, "name": "Ana Torres", "email": "ana.torres@example.com", "signup_date": "2024-01-15", "balance_cents": 12050}
+{"id": 2, "name": "Luis Pérez", "email": "luis.perez@example.com", "signup_date": "2024-02-03", "balance_cents": 1999}
+{"id": 3, "name": "Gómez, María", "email": "maria.gomez@example.org", "signup_date": "2023-12-01", "balance_cents": 123450}
+{"id": 4, "name": "Chen Wei", "email": "chen.wei@example.co.uk", "signup_date": "2024-02-29", "balance_cents": -4510}
+{"id": 5, "name": "O'Brien", "email": "obrien@example.ie", "signup_date": "2024-03-31", "balance_cents": 10}
+{"id": 6, "name": "Fatima Zahra", "email": "fatima@example.ma", "signup_date": "2024-04-01", "balance_cents": 10000}
+{"id": 7, "name": "Jon Snow", "email": "jon@example.com", "signup_date": "2023-08-15", "balance_cents": 29}
+{"id": 8, "name": "Élise Dubois", "email": "elise.dubois@example.fr", "signup_date": "2022-11-11", "balance_cents": 115}
+{"id": 9, "name": "Kofi Mensah", "email": "kofi@example.com", "signup_date": "2024-05-05", "balance_cents": 0}
+{"id": 10, "name": "Sven Olsen", "email": "sven@example.no", "signup_date": "2024-06-30", "balance_cents": 1000000}
+{"id": 11, "name": "Priya Nair", "email": "priya.nair@example.in", "signup_date": "2024-07-01", "balance_cents": 807}
+{"id": 12, "name": "Tom Hanks", "email": "tom@example.com", "signup_date": "2024-01-01", "balance_cents": 250}
+{"id": 13, "name": "Yuki Tanaka", "email": "yuki@example.jp", "signup_date": "2024-08-20", "balance_cents": 3333}
+{"id": 14, "name": "Omar Haddad", "email": "omar@example.com", "signup_date": "2023-12-31", "balance_cents": -1}
+{"id": 15, "name": "Ingrid Berg", "email": "ingrid@example.se", "signup_date": "2024-02-29", "balance_cents": 250075}
+{"id": 16, "name": "Paolo Rossi", "email": "paolo@example.it", "signup_date": "2024-09-09", "balance_cents": 6410}
+{"id": 17, "name": "Lena Fischer", "email": "lena@example.de", "signup_date": "2024-10-10", "balance_cents": 435}
+{"id": 18, "name": "Noor Khan", "email": "noor@example.pk", "signup_date": "2024-10-31", "balance_cents": 57}
+{"id": 19, "name": "Mateo Díaz", "email": "mateo@example.es", "signup_date": "2024-11-01", "balance_cents": 100000}
+{"id": 20, "name": "Sara Lind", "email": "sara@example.fi", "signup_date": "2024-11-05", "balance_cents": 1608}
+{"id": 42, "name": "Second Chance", "email": "sc@example.com", "signup_date": "2024-02-02", "balance_cents": 700}
+{"id": 21, "name": "Wang Fang", "email": "wang.fang@example.cn", "signup_date": "2024-11-05", "balance_cents": 995}
+{"id": 22, "name": "Aisha Bello", "email": "aisha@example.ng", "signup_date": "2024-11-07", "balance_cents": -120000}
+{"id": 24, "name": "Rosa Lima", "email": "rosa@example.pt", "signup_date": "2024-11-09", "balance_cents": 0}

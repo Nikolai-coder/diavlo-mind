@@ -1,0 +1,84 @@
+{
+  "objective": "`python export.py orders.csv --since YYYY-MM-DD` prints only orders dated on or after that day; an invalid date prints a clear error to stderr and exits with code 2; the option is documented in README.md; the 4 existing tests and the new tests all pass under `python -m unittest discover -s tests -v`.",
+  "requirements": [
+    {
+      "id": "R1",
+      "text": "Add a `--since YYYY-MM-DD` option to `export.py`."
+    },
+    {
+      "id": "R2",
+      "text": "With `--since`, orders dated before that day are left out; orders dated on that day are kept (inclusive boundary)."
+    },
+    {
+      "id": "R3",
+      "text": "An invalid `--since` date must print a clear error message and exit with code 2."
+    },
+    {
+      "id": "R4",
+      "text": "Document the `--since` option in `README.md`."
+    },
+    {
+      "id": "R5",
+      "text": "Keep the existing tests in `tests/test_export.py` passing, unmodified."
+    },
+    {
+      "id": "R6",
+      "text": "Add tests for the new behaviour: filtering, inclusive boundary, and invalid date giving exit code 2 plus an error message."
+    },
+    {
+      "id": "R7",
+      "text": "(implied) Behaviour without `--since` is unchanged: same output format, same row order, `--min-amount` works as before, and `export.select(rows)` / `export.select(rows, min_amount)` still work with the same positional signature."
+    },
+    {
+      "id": "R8",
+      "text": "(implied) `--since` and `--min-amount` can be combined; a row must pass both filters."
+    },
+    {
+      "id": "R9",
+      "text": "(implied) Standard library only; do not change `orders.csv`; no refactoring, renaming or reformatting outside the change."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T1",
+      "title": "Add --since date filter to export.py, with tests and README documentation",
+      "instructions": "Read `export.py`, `tests/test_export.py` and `README.md` first. Make the smallest change that works; do not touch `orders.csv`, and do not edit or delete the four existing tests.\n\n**1. `export.py`**\n\na. Add `import datetime` and `import re` to the existing imports.\n\nb. Add a module-level helper for argparse:\n```python\ndef parse_date(text):\n    \"\"\"argparse type: strict YYYY-MM-DD -> datetime.date.\"\"\"\n    if not re.fullmatch(r\"\\d{4}-\\d{2}-\\d{2}\", text):\n        raise argparse.ArgumentTypeError(f\"invalid date {text!r}: expected YYYY-MM-DD\")\n    try:\n        return datetime.date.fromisoformat(text)\n    except ValueError:\n        raise argparse.ArgumentTypeError(f\"invalid date {text!r}: expected YYYY-MM-DD\")\n```\nThe regex is required. `date.fromisoformat` alone accepts `20240201` on Python 3.11+, and `strptime` accepts `2024-2-1`. The `fromisoformat` call then rejects impossible dates such as `2024-02-30` and `2024-13-01`.\n\nc. Change `select` to `def select(rows, min_amount=None, since=None):`. Keep `min_amount` as the second positional parameter. `since` is a `datetime.date` or `None`. Inside the loop, after the existing min_amount check, add:\n```python\nif since is not None and datetime.date.fromisoformat(row[\"date\"].strip()) < since:\n    continue\n```\nKeep input order. The comparison is strictly `<`, so a row dated exactly `since` is kept.\n\nd. In `main`, after the `--min-amount` argument, add:\n```python\nparser.add_argument(\"--since\", type=parse_date, metavar=\"YYYY-MM-DD\", help=\"leave out orders dated before this day\")\n```\nand call `select(load(args.path), args.min_amount, args.since)`. Leave the print format and `return 0` unchanged.\n\nInvalid-date behaviour: the `ArgumentTypeError` makes argparse print usage plus `export.py: error: argument --since: invalid date 'xxx': expected YYYY-MM-DD` to stderr and raise `SystemExit(2)`. This is the required exit code 2. Do not catch it and do not add a separate `return 2` path.\n\n**2. `tests/test_export.py`**\n\nAppend new test methods to the existing `ExportTests` class. Add `from contextlib import redirect_stderr` to the imports (extend the existing `contextlib` import line). Reuse `self.run_cli` for the success cases. Data rows in order are: 2024-01-05 acme, 2024-01-31 globex, 2024-02-01 initech, 2024-02-14 acme, 2024-03-02 hooli.\n\n- `test_since_filters_out_earlier_orders`: `--since 2024-02-02` gives code 0 and customers `[\"acme\", \"hooli\"]` (customer is `line.split()[1]`).\n- `test_since_keeps_orders_on_that_day`: `--since 2024-02-01` gives customers `[\"initech\", \"acme\", \"hooli\"]`, and the first line starts with `2024-02-01`.\n- `test_since_before_all_rows_keeps_everything`: `--since 2023-01-01` gives 5 lines.\n- `test_since_after_all_rows_prints_nothing`: `--since 2025-01-01` gives code 0 and `[]`.\n- `test_since_combines_with_min_amount`: `--since 2024-02-01 --min-amount 100` gives customers `[\"initech\"]`.\n- `test_select_since_parameter`: `export.select(export.load(DATA), since=datetime.date(2024, 3, 2))` gives customers `[\"hooli\"]` (add `import datetime`).\n- `test_invalid_since_exits_with_code_2`: loop with `self.subTest(value=value)` over `[\"not-a-date\", \"2024-02-30\", \"2024-13-01\", \"20240201\", \"2024-2-1\", \"01-02-2024\", \"\"]`. For each value, redirect both stdout and stderr to `io.StringIO()`, call `export.main([DATA, \"--since\", value])` inside `with self.assertRaises(SystemExit) as ctx:`, then assert `ctx.exception.code == 2`, that the stderr text contains `--since` and `YYYY-MM-DD`, and that the stdout buffer is empty (no rows printed).\n\n**3. `README.md`**\n\nInside the existing code block add the line `python export.py orders.csv --since 2024-02-01` after the `--min-amount` example. Directly below the code block add a short paragraph saying: `--since YYYY-MM-DD` leaves out orders dated before that day; orders on that day are kept; it can be combined with `--min-amount`; an invalid date prints an error and exits with code 2. Keep the existing lines, including the test command sentence, unchanged.\n\n**4. Verify**\n\nRun every acceptance check below from the repository root after the edits. Fix any failure before reporting. Report the actual command output, and write NOT RUN for anything you could not execute.",
+      "files": [
+        "export.py",
+        "tests/test_export.py",
+        "README.md"
+      ],
+      "acceptance": [
+        "`python -m unittest discover -s tests -v` exits 0 with the 4 original tests plus all new tests reported `ok`, and no failures or errors.",
+        "`python export.py orders.csv --since 2024-02-01` exits 0 and prints exactly 3 lines, dated 2024-02-01 (initech), 2024-02-14 (acme) and 2024-03-02 (hooli), in that order.",
+        "`python export.py orders.csv --since 2024-02-02` exits 0 and prints exactly 2 lines (acme 15.25, hooli 99.99).",
+        "`python export.py orders.csv --since 2024-02-01 --min-amount 100` prints exactly 1 line (initech 310.00).",
+        "`python export.py orders.csv --since 2024-02-30; echo $?` prints an error to stderr that mentions `--since`, the bad value and `YYYY-MM-DD`, prints no order rows, and echoes `2`. The same holds for `--since banana` and `--since 20240201`.",
+        "`python export.py orders.csv` and `python export.py orders.csv --min-amount 100` give the same output as before the change (5 lines and 2 lines respectively, same format).",
+        "`python export.py --help` lists `--since YYYY-MM-DD` with its help text.",
+        "`README.md` contains a `--since` usage example and a sentence stating that orders on the given day are kept and that an invalid date exits with code 2; the original lines are still present.",
+        "`git diff --stat` shows changes only in `export.py`, `tests/test_export.py` and `README.md`, and the diff of `tests/test_export.py` only adds lines apart from the extended import."
+      ],
+      "requirements": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9"
+      ]
+    }
+  ],
+  "assumptions": [
+    "\"Exit with code 2\" is met by argparse's standard error path (usage plus error message on stderr, `SystemExit(2)`), which matches how argparse already handles a bad `--min-amount`; `main()` does not return 2 itself.",
+    "\"Invalid date\" means anything that is not a real calendar date written strictly as zero-padded `YYYY-MM-DD`, so `2024-2-1`, `20240201`, `2024-02-30` and an empty string are all rejected.",
+    "The `date` column in the input CSV always holds valid `YYYY-MM-DD` values, as in `orders.csv`; handling malformed dates inside the CSV is out of scope, and such a row would raise `ValueError` when `--since` is used.",
+    "The error message goes to stderr, not stdout.",
+    "Python 3.7 or newer is available (needed for `datetime.date.fromisoformat`).",
+    "No git commit is required; the executor only edits the working tree."
+  ],
+  "questions": []
+}

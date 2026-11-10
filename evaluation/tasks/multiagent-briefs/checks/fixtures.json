@@ -1,0 +1,104 @@
+{
+ "inputs": {
+  "normal": "2026-03-01T12:00:05Z ERROR billing-api: card declined for order 1182\n2026-03-01T12:00:09Z INFO auth: login ok user=41\n\n2026-03-01T12:01:13Z WARN queue-2: depth 80   \nthis line is garbage\n2026-03-01T12:02:00Z ERROR auth: token expired\n2026-03-01T12:02:30Z error auth: lower-case level\n2026-03-01T12:03:00Z ERROR billing-api: timeout: upstream took 30s\n2026-03-01T12:04:00Z DEBUG cache: miss key=a:b\n2026-03-01T12:05:00Z ERROR search: index unavailable\n2026-03-01T12:06:00Z ERROR zeta-9: disk full\n2026-03-01 12:07:00 ERROR auth: wrong timestamp shape\n2026-03-01T12:08:00Z ERROR Auth: upper-case service\n2026-03-01T12:09:00Z INFO auth: \n   \n2026-03-01T12:09:41Z ERROR auth: session store down\n2026-03-01T11:59:59Z INFO boot: started\n",
+  "no_errors": "2026-05-02T08:00:00Z INFO web: up\n2026-05-02T08:00:01Z DEBUG web: tick\n2026-05-02T07:59:59Z WARN web: slow start\n",
+  "empty": "\n   \n"
+ },
+ "expected": {
+  "normal": {
+   "records": [
+    {
+     "ts": "2026-03-01T12:00:05Z",
+     "level": "ERROR",
+     "service": "billing-api",
+     "message": "card declined for order 1182"
+    },
+    {
+     "ts": "2026-03-01T12:00:09Z",
+     "level": "INFO",
+     "service": "auth",
+     "message": "login ok user=41"
+    },
+    {
+     "ts": "2026-03-01T12:01:13Z",
+     "level": "WARN",
+     "service": "queue-2",
+     "message": "depth 80"
+    },
+    {
+     "ts": "2026-03-01T12:02:00Z",
+     "level": "ERROR",
+     "service": "auth",
+     "message": "token expired"
+    },
+    {
+     "ts": "2026-03-01T12:03:00Z",
+     "level": "ERROR",
+     "service": "billing-api",
+     "message": "timeout: upstream took 30s"
+    },
+    {
+     "ts": "2026-03-01T12:04:00Z",
+     "level": "DEBUG",
+     "service": "cache",
+     "message": "miss key=a:b"
+    },
+    {
+     "ts": "2026-03-01T12:05:00Z",
+     "level": "ERROR",
+     "service": "search",
+     "message": "index unavailable"
+    },
+    {
+     "ts": "2026-03-01T12:06:00Z",
+     "level": "ERROR",
+     "service": "zeta-9",
+     "message": "disk full"
+    },
+    {
+     "ts": "2026-03-01T12:09:41Z",
+     "level": "ERROR",
+     "service": "auth",
+     "message": "session store down"
+    },
+    {
+     "ts": "2026-03-01T11:59:59Z",
+     "level": "INFO",
+     "service": "boot",
+     "message": "started"
+    }
+   ],
+   "malformed": 5,
+   "report": "Log summary\nTotal: 10 records, 5 malformed\nBy level: ERROR=6 WARN=1 INFO=2 DEBUG=1\nTop services by errors:\n1. auth (2)\n2. billing-api (2)\n3. search (1)\nFirst: 2026-03-01T11:59:59Z\nLast: 2026-03-01T12:09:41Z"
+  },
+  "no_errors": {
+   "records": [
+    {
+     "ts": "2026-05-02T08:00:00Z",
+     "level": "INFO",
+     "service": "web",
+     "message": "up"
+    },
+    {
+     "ts": "2026-05-02T08:00:01Z",
+     "level": "DEBUG",
+     "service": "web",
+     "message": "tick"
+    },
+    {
+     "ts": "2026-05-02T07:59:59Z",
+     "level": "WARN",
+     "service": "web",
+     "message": "slow start"
+    }
+   ],
+   "malformed": 0,
+   "report": "Log summary\nTotal: 3 records, 0 malformed\nBy level: ERROR=0 WARN=1 INFO=1 DEBUG=1\nTop services by errors:\n(none)\nFirst: 2026-05-02T07:59:59Z\nLast: 2026-05-02T08:00:01Z"
+  },
+  "empty": {
+   "records": [],
+   "malformed": 0,
+   "report": "Log summary\nTotal: 0 records, 0 malformed\nBy level: ERROR=0 WARN=0 INFO=0 DEBUG=0\nTop services by errors:\n(none)\nFirst: -\nLast: -"
+  }
+ }
+}

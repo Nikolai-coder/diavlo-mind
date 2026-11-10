@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.DS_Store
+.pytest_cache/
+*.calls
+# benchmark working directories (results that are meant to be kept live in evaluation/results/)
+evaluation/runs/
+# project state created when the scripts are tried inside this repository
+/.diavlo-mind/
+# release archives are attached to GitHub releases, not committed
+/dist/

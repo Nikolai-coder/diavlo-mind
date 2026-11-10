@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-10",
+  "host": "Claude Code 2.1.322, headless (claude -p)",
+  "model": [
+    "claude-haiku-5-5"
+  ],
+  "activation": "/diavlo-mind:diavlo-mind via --plugin-dir",
+  "turns": 15,
+  "tool_calls": 14,
+  "input_tokens_including_cache": 504089,
+  "output_tokens": 7789,
+  "cost_usd_reported": 0.0142,
+  "duration_seconds": 35.6,
+  "tool_sequence": [
+    {
+      "tool": "Bash",
+      "target": "ls -la && echo \"---\" && find . -type f -not -path './.git/*' | head -100"
+    },
+    {
+      "tool": "Read",
+      "target": "<workspace>/export.py"
+    },
+    {
+      "tool": "Read",
+      "target": "<workspace>/README.md"
+    },
+    {
+      "tool": "Read",
+      "target": "<workspace>/tests/test_export.py"
+    },
+    {
+      "tool": "Read",
+      "target": "<workspace>/orders.csv"
+    },
+    {
+      "tool": "Bash",
+      "target": "python3 --version && python3 -m unittest discover -s tests -v 2>&1 | tail -15"
+    },
+    {
+      "tool": "Edit",
+      "target": "<workspace>/export.py"
+    },
+    {
+      "tool": "Edit",
+      "target": "<workspace>/export.py"
+    },
+    {
+      "tool": "Edit",
+      "target": "<workspace>/tests/test_export.py"
+    },
+    {
+      "tool": "Edit",
+      "target": "<workspace>/tests/test_export.py"
+    },
+    {
+      "tool": "Bash",
+      "target": "python3 -m unittest discover -s tests -v 2>&1 | tail -25"
+    },
+    {
+      "tool": "Bash",
+      "target": "python3 export.py orders.csv --since 2024-02-30; echo \"exit=$?\"; echo ---; python3 export.py orders.csv --since 2024-02-01; echo \"exit=$?\"; echo ---; python3 ex"
+    },
+    {
+      "tool": "Edit",
+      "target": "<workspace>/README.md"
+    },
+    {
+      "tool": "Bash",
+      "target": "python3 -m unittest discover -s tests -v 2>&1 | tail -3; echo \"exit=${PIPESTATUS[0]}\"; python3 -m py_compile export.py tests/test_export.py && echo compiled; py"
+    }
+  ]
+}

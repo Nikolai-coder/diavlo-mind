@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Installation help
+    url: https://github.com/Nikolai-coder/diavlo-mind/blob/main/INSTALL.md
+    about: Install commands for every supported environment and a troubleshooting table.
+  - name: What works where
+    url: https://github.com/Nikolai-coder/diavlo-mind/blob/main/adapters/README.md
+    about: Feature matrix per environment, with what was verified and what was only read in documentation.

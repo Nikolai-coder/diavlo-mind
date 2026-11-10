@@ -1,0 +1,85 @@
+{
+  "verdict": "PASS",
+  "coverage": [
+    {
+      "requirement": "R1",
+      "covered": true,
+      "where": "export.py:40",
+      "note": "`--since` is added with `type=parse_date` and metavar `YYYY-MM-DD`."
+    },
+    {
+      "requirement": "R2",
+      "covered": true,
+      "where": "export.py:30-31",
+      "note": "Rows are skipped only when the row date is strictly before `since`, so the boundary day is kept. Tested at tests/test_export.py:38-45."
+    },
+    {
+      "requirement": "R3",
+      "covered": true,
+      "where": "export.py:9-16",
+      "note": "The strict regex plus `date.fromisoformat` raise `ArgumentTypeError`, so argparse prints `argument --since: invalid date '...': expected YYYY-MM-DD` to stderr and exits 2. Tested at tests/test_export.py:64-76 for seven bad values, including the empty string and impossible calendar dates."
+    },
+    {
+      "requirement": "R4",
+      "covered": true,
+      "where": "README.md:8,11",
+      "note": "There is a usage example and a description covering the inclusive boundary, combining with `--min-amount`, and exit code 2."
+    },
+    {
+      "requirement": "R5",
+      "covered": true,
+      "where": "tests/test_export.py:21-36",
+      "note": "The four pre-existing tests are present and the check ran 11 tests OK. No diff was shown, so 'unmodified' is ASSUMED from the content; the only visible changes outside the new tests are the added imports at lines 1 and 5."
+    },
+    {
+      "requirement": "R6",
+      "covered": true,
+      "where": "tests/test_export.py:38-76",
+      "note": "Filtering (38-40), inclusive boundary (42-45), and invalid date with exit code 2 plus stderr message (64-76) are all tested. There are also extra tests for before-all, after-all, combined filters and the `select` keyword."
+    },
+    {
+      "requirement": "R7",
+      "covered": true,
+      "where": "export.py:24-33,42-43",
+      "note": "`since` is appended as the third parameter with default None, so `select(rows)` and `select(rows, min_amount)` are unchanged. The print format and row order are untouched, and the date is parsed only when `since` is given."
+    },
+    {
+      "requirement": "R8",
+      "covered": true,
+      "where": "export.py:28-31",
+      "note": "The two filters are independent `continue` checks, so a row must pass both. Tested at tests/test_export.py:56-58."
+    },
+    {
+      "requirement": "R9",
+      "covered": true,
+      "where": "export.py:2-6",
+      "note": "Only stdlib imports are used (`argparse`, `csv`, `datetime`, `re`, `sys`). `orders.csv` shows the expected 5 data rows; with no diff shown, 'unchanged' is ASSUMED. No unrelated refactoring is visible."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "where": "export.py:30",
+      "finding": "When `--since` is given, a CSV row with an empty or malformed `date` raises an uncaught `ValueError` traceback from `date.fromisoformat`. This is not covered by any requirement and matches how a bad `amount` already fails under `--min-amount`, but it is a new failure path that only appears with `--since`.",
+      "suggestion": "Either accept it as consistent with existing behaviour, or catch `ValueError` and report the offending row with a clear message. Confirm the desired behaviour with the requester before adding it."
+    },
+    {
+      "severity": "note",
+      "where": "export.py:30",
+      "finding": "Row dates are parsed with `.strip()` and the lenient `date.fromisoformat`, while the `--since` argument is validated strictly by regex. On Python 3.11+ row dates such as `20240201` would be accepted, whereas on older versions they raise. This has no effect on the given `orders.csv`.",
+      "suggestion": "No change needed for the stated requirements; reuse the same strict parser for rows if consistency is wanted."
+    },
+    {
+      "severity": "note",
+      "where": "export.py:11",
+      "finding": "`\\d` in the regex also matches non-ASCII Unicode digits. Such input is still rejected with the same clear message via the `ValueError` branch on the Pythons I know of, so this is harmless (ASSUMED, not executed).",
+      "suggestion": "Optionally use `[0-9]` or `re.ASCII` to make the intent explicit."
+    },
+    {
+      "severity": "note",
+      "where": "tests/test_export.py:1,5",
+      "finding": "The existing test file's import lines were extended (`import datetime`, `redirect_stderr`) to support the new tests. The existing test bodies appear untouched, but no diff was provided to confirm R5's 'unmodified' literally.",
+      "suggestion": "Confirm with `git diff tests/test_export.py` that only additions were made."
+    }
+  ]
+}

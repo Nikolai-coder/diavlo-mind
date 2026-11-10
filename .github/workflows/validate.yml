@@ -1,0 +1,54 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, python: "3.9" }
+          - { os: ubuntu-latest, python: "3.13" }
+          - { os: macos-latest, python: "3.13" }
+          - { os: windows-latest, python: "3.13" }
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      # No dependencies to install: every script uses the standard library only.
+
+      - name: Prompt tiers are in sync with SKILL.md
+        run: python scripts/build_prompts.py --check
+
+      - name: Repository validation
+        run: python scripts/validate.py
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests
+
+      - name: Benchmark self-test (no model is called)
+        run: python evaluation/selftest.py
+
+      - name: Release archives build
+        run: python scripts/package.py

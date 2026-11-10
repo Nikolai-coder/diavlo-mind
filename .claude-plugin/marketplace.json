@@ -1,0 +1,14 @@
+{
+  "name": "diavlo",
+  "description": "DIAVLO MIND agent operating framework",
+  "owner": {
+    "name": "Diavlo"
+  },
+  "plugins": [
+    {
+      "name": "diavlo-mind",
+      "source": "./",
+      "description": "Requirement tracking, four effort modes, 20 procedures, 8 specialist agents, project-state checkpoints and evidence-based completion reports."
+    }
+  ]
+}

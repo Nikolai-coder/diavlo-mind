@@ -1,0 +1,88 @@
+$ dm_state.py init --objective "Ship the --since filter for the export tool" --mode autonomous --done "python -m unittest discover -s tests passes" --done "README documents --since"
+initialized <project>/.diavlo-mind/state.json
+
+$ dm_state.py req add "--since YYYY-MM-DD leaves out orders dated before that day"
+R1
+$ dm_state.py req add "An invalid date prints a clear error and exits with code 2"
+R2
+$ dm_state.py req add "README documents the option" --type format
+R3
+$ dm_state.py req add "Existing tests keep passing" --type constraint --source implied
+R4
+
+$ dm_state.py task add "Parse and validate --since" --req R1 --req R2 --accept "tests for valid and invalid dates pass" --files export.py --files tests/test_export.py
+T1
+$ dm_state.py task add "Document the option" --req R3 --depends T1 --accept "README shows --since" --files README.md
+T2
+$ dm_state.py task add "Full regression run" --owner validator --req R4 --depends T1 --depends T2 --accept "whole suite passes"
+T3
+
+$ dm_state.py validate
+state is consistent
+
+$ dm_state.py next
+T1	executor	Parse and validate --since — accept: tests for valid and invalid dates pass
+
+$ dm_state.py task set T2 --status doing        # refused: its dependency is not finished
+  error: T2 cannot start: waiting for T1
+
+$ dm_state.py task set T1 --status doing
+T1 doing
+$ dm_state.py task set T1 --status done               # refused: no evidence
+  error: T1: 'done' needs --evidence (rule 6: prove, don't claim)
+$ dm_state.py task set T1 --status done --evidence "python -m unittest discover -s tests -> 12 passed"
+T1 done
+$ dm_state.py decision "Validate the date in argparse (type=)" --why "argparse already prints the error and exits 2" --alternatives "manual check in main()" --revisit-if "a custom exit code is needed"
+D1
+
+$ dm_state.py checkpoint "T1 done and verified" --next "T2: document --since in README.md" --question "Should malformed dates inside the CSV be reported?"
+C1 saved; STATE.md updated
+
+# --- the session ends here; a new session starts with no memory ---
+
+$ dm_state.py resume
+RESUME BRIEF
+Objective: Ship the --since filter for the export tool
+Mode: AUTONOMOUS   Updated: 2026-11-10T12:00:00Z
+Definition of done: python -m unittest discover -s tests passes; README documents --since
+Progress: 1 of 3 tasks done; 0 of 4 requirements met
+Last checkpoint (2026-11-10T12:00:00Z): T1 done and verified
+  Next action recorded: T2: document --since in README.md
+  Open question: Should malformed dates inside the CSV be reported?
+In progress (verify before trusting): none
+Ready to start: 
+  T2 Document the option — README shows --since
+Blocked: none
+First step: verify the claims above against the real files and tests (workflows/protocols/recovery.md).
+
+$ dm_state.py done-check
+not done: R1 is open: --since YYYY-MM-DD leaves out orders dated before that day
+not done: R2 is open: An invalid date prints a clear error and exits with code 2
+not done: R3 is open: README documents the option
+not done: R4 is open: Existing tests keep passing
+not done: T2 is todo: Document the option
+not done: T3 is todo: Full regression run
+NOT DONE - 6 gap(s)
+(exit code 1)
+
+$ dm_state.py task set T2 --status done --evidence "README.md lines 8 and 14 mention --since"
+T2 done
+$ dm_state.py task set T3 --status done --evidence "python -m unittest discover -s tests -> 12 passed, 0 failed"
+T3 done
+$ dm_state.py req set R1 --status met --evidence "export.py --since 2024-02-01 prints 3 rows"
+R1 met
+$ dm_state.py req set R2 --status met --evidence "--since 2024-13-01 -> error message, exit 2"
+R2 met
+$ dm_state.py req set R3 --status met --evidence "README.md documents --since"
+R3 met
+$ dm_state.py req set R4 --status met --evidence "12 tests passed, 4 of them pre-existing"
+R4 met
+
+$ dm_state.py done-check
+DONE - every requirement is met or waived with evidence, every task is done or dropped.
+confirm by running: python -m unittest discover -s tests passes
+confirm by running: README documents --since
+(exit code 0)
+
+$ dm_state.py report
+wrote <project>/.diavlo-mind/STATE.md (3 of 3 tasks done)

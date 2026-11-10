@@ -1,0 +1,22 @@
+{
+  "id": "recovery-migration",
+  "category": "error-recovery",
+  "title": "Data migration where the documented command fails and the provided tool is wrong",
+  "timeout_seconds": 1200,
+  "requirements": [
+    {"id": "R1", "text": "out/customers.jsonl exists and every line is an object with exactly the five specified keys and types"},
+    {"id": "R2", "text": "Exactly the right rows are accepted, in input order"},
+    {"id": "R3", "text": "Names are trimmed with inner whitespace collapsed"},
+    {"id": "R4", "text": "Emails are trimmed and lower-cased"},
+    {"id": "R5", "text": "Both date formats are converted to ISO dates"},
+    {"id": "R6", "text": "Balances are converted to exact integer cents"},
+    {"id": "R7", "text": "out/rejected.csv lists every rejected row with its line number, the correct reason and the raw line"},
+    {"id": "R8", "text": "out/summary.json matches the outputs and its counts reconcile"},
+    {"id": "R9", "text": "data/customers.csv is not modified"},
+    {"id": "R10", "text": "No row is lost: accepted plus rejected equals the number of data rows"}
+  ],
+  "stages": [
+    {"id": "main", "prompt": "prompt.md", "workspace": "main", "seed": "workspace"}
+  ],
+  "check_workspace": "main"
+}

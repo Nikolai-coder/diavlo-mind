@@ -1,0 +1,25 @@
+{
+  "id": "programming-duration",
+  "category": "programming",
+  "title": "Duration parser and formatter with thirteen stated requirements",
+  "timeout_seconds": 900,
+  "requirements": [
+    {"id": "R1", "text": "parse_duration converts w, d, h, m, s components and their combinations to seconds"},
+    {"id": "R2", "text": "Whitespace is allowed around the string and between components, not between a number and its unit"},
+    {"id": "R3", "text": "Unit letters are case-insensitive"},
+    {"id": "R4", "text": "A bare integer string means seconds; otherwise every component needs a unit"},
+    {"id": "R5", "text": "Leading zeros are accepted"},
+    {"id": "R6", "text": "Units must be in descending order and appear at most once"},
+    {"id": "R7", "text": "Invalid input raises ValueError whose message contains the offending input"},
+    {"id": "R8", "text": "A non-str argument to parse_duration raises TypeError"},
+    {"id": "R9", "text": "format_duration returns the canonical compact form; 0 gives 0s"},
+    {"id": "R10", "text": "format_duration rejects negatives with ValueError and non-int (including bool and float) with TypeError"},
+    {"id": "R11", "text": "parse(format(parse(x))) equals parse(x) for valid x"},
+    {"id": "R12", "text": "test_duration.py has at least 12 unittest methods and they pass"},
+    {"id": "R13", "text": "Standard library only, and no files other than duration.py and test_duration.py"}
+  ],
+  "stages": [
+    {"id": "main", "prompt": "prompt.md", "workspace": "main"}
+  ],
+  "check_workspace": "main"
+}

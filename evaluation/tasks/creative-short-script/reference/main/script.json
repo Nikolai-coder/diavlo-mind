@@ -1,0 +1,76 @@
+{
+  "title": "Lantern Tide - the river does the moving",
+  "duration": 30.0,
+  "beats": [
+    {
+      "start": 0.0,
+      "end": 2.5,
+      "visual": "Black screen; one paper lantern lights up on dark water.",
+      "voiceover": "What if you never touched the lantern?",
+      "caption": "What if the river did it?"
+    },
+    {
+      "start": 2.5,
+      "end": 5.5,
+      "visual": "A finger drags a stone into the stream; the current curls around it.",
+      "voiceover": "In Lantern Tide you only bend the current.",
+      "caption": "You bend the current"
+    },
+    {
+      "start": 5.5,
+      "end": 8.5,
+      "visual": "The lantern drifts along the new curve and passes a reed gate.",
+      "voiceover": "The river does the moving.",
+      "caption": "The river carries it"
+    },
+    {
+      "start": 8.5,
+      "end": 12.0,
+      "visual": "Wide shot of a single-screen level: three stones, two gates, one lantern.",
+      "voiceover": "Every level fits on one screen.",
+      "caption": "One screen, one puzzle"
+    },
+    {
+      "start": 12.0,
+      "end": 15.0,
+      "visual": "Two lanterns split at a fork and meet again downstream.",
+      "voiceover": "Add a stone. Split the stream. Watch them meet.",
+      "caption": "Split it. Let them meet."
+    },
+    {
+      "start": 15.0,
+      "end": 18.5,
+      "visual": "Night sky reflected in the water; fireflies follow the lanterns.",
+      "voiceover": "",
+      "caption": "Calm, even when it's hard"
+    },
+    {
+      "start": 18.5,
+      "end": 22.0,
+      "visual": "Platform logos rise like lanterns: PC, Switch, Android.",
+      "voiceover": "Out this Friday on PC, Switch and Android.",
+      "caption": "Friday: PC, Switch, Android"
+    },
+    {
+      "start": 22.0,
+      "end": 25.5,
+      "visual": "Store page on a phone; a thumb taps the wishlist button.",
+      "voiceover": "Add it to your wishlist so Friday finds you.",
+      "caption": "Wishlist it before Friday"
+    },
+    {
+      "start": 25.5,
+      "end": 27.5,
+      "visual": "The lantern from the first shot floats back into frame.",
+      "voiceover": "And then let the river work.",
+      "caption": "Then let it flow"
+    },
+    {
+      "start": 27.5,
+      "end": 30.0,
+      "visual": "Same framing as the opening shot: one lantern on dark water.",
+      "voiceover": "",
+      "caption": "What if the river did it?"
+    }
+  ]
+}

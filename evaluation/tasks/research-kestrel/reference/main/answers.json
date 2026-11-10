@@ -1,0 +1,17 @@
+{
+  "Q1": {"answer": "7411", "sources": ["01-docs-v3-configuration.md", "03-changelog.md"], "confidence": "confirmed",
+         "note": "The 2024 blog and the archived 2.x page say 7400, which was the default before 3.0."},
+  "Q2": {"answer": "250", "sources": ["03-changelog.md", "06-docs-v3-errata.md"], "confidence": "confirmed",
+         "note": "The configuration page (2025-11-04) says 500; the 3.2.0 changelog and the 2026-04-02 errata are newer and say 250."},
+  "Q3": {"answer": "no", "sources": ["03-changelog.md"], "confidence": "confirmed",
+         "note": "kestrel.sync was removed in 3.2.0 after being deprecated in 3.0.0."},
+  "Q4": {"answer": "3.11", "sources": ["03-changelog.md"], "confidence": "confirmed", "note": ""},
+  "Q5": {"answer": "UNKNOWN", "sources": [], "confidence": "unknown",
+         "note": "No file documents snapshot_interval; the forum only says one user sets their own."},
+  "Q6": {"answer": "UNKNOWN", "sources": ["05-forum-thread.md", "04-blog-getting-started.md"], "confidence": "unknown",
+         "note": "Community sources contradict each other and no official file names a lead maintainer."},
+  "Q7": {"answer": "--cert", "sources": ["07-docs-v3-migration-guide.md"], "confidence": "confirmed", "note": ""},
+  "Q8": {"answer": "1024", "sources": ["09-docs-v3-limits.md"], "confidence": "confirmed", "note": ""},
+  "Q9": {"answer": "yes", "sources": ["05-forum-thread.md"], "confidence": "unconfirmed",
+         "note": "One forum user reports running 3.2 pre-releases on FreeBSD 14; no official source lists FreeBSD."}
+}

@@ -1,0 +1,4 @@
+# Keep LF everywhere so skill files and scripts behave the same on Windows, macOS and Linux.
+* text=auto eol=lf
+*.png binary
+*.zip binary

@@ -1,0 +1,527 @@
+{
+  "generated": "2026-11-10T13:36:11Z",
+  "runs": 48,
+  "meta": [
+    {
+      "label": "claude-code-haiku-20261110T125701Z",
+      "started": "2026-11-10T12:57:01Z",
+      "runner": "claude-code",
+      "model": "haiku",
+      "executor": null,
+      "advisor": null,
+      "arms": [
+        "baseline"
+      ],
+      "trials": 1,
+      "tasks": [
+        "architecture-notifications",
+        "debugging-inventory",
+        "programming-duration",
+        "research-kestrel"
+      ],
+      "prompt_tier": "standard",
+      "prompt_characters": 14154,
+      "framework_version": "1.0.0",
+      "python": "3.13.18",
+      "platform": "Linux-6.18.44-fc-v338-x86_64-with-glibc2.39",
+      "claude_code_version": "2.1.322 (Claude Code)",
+      "agent_cmd": null,
+      "finished": "2026-11-10T13:00:06Z",
+      "folder": "pilot-haiku/baseline-a"
+    },
+    {
+      "label": "claude-code-haiku-20261110T130502Z",
+      "started": "2026-11-10T13:05:02Z",
+      "runner": "claude-code",
+      "model": "haiku",
+      "executor": null,
+      "advisor": null,
+      "arms": [
+        "baseline"
+      ],
+      "trials": 2,
+      "first_trial": 2,
+      "tasks": [
+        "architecture-notifications",
+        "debugging-inventory",
+        "programming-duration",
+        "research-kestrel"
+      ],
+      "prompt_tier": "standard",
+      "prompt_characters": 14154,
+      "framework_version": "1.0.0",
+      "python": "3.13.18",
+      "platform": "Linux-6.18.44-fc-v338-x86_64-with-glibc2.39",
+      "claude_code_version": "2.1.322 (Claude Code)",
+      "agent_cmd": null,
+      "finished": "2026-11-10T13:10:46Z",
+      "folder": "pilot-haiku/baseline-a-t23"
+    },
+    {
+      "label": "claude-code-haiku-20261110T125701Z",
+      "started": "2026-11-10T12:57:01Z",
+      "runner": "claude-code",
+      "model": "haiku",
+      "executor": null,
+      "advisor": null,
+      "arms": [
+        "baseline"
+      ],
+      "trials": 1,
+      "tasks": [
+        "creative-short-script",
+        "longterm-notes-cli",
+        "multiagent-briefs",
+        "recovery-migration"
+      ],
+      "prompt_tier": "standard",
+      "prompt_characters": 14154,
+      "framework_version": "1.0.0",
+      "python": "3.13.18",
+      "platform": "Linux-6.18.44-fc-v338-x86_64-with-glibc2.39",
+      "claude_code_version": "2.1.322 (Claude Code)",
+      "agent_cmd": null,
+      "finished": "2026-11-10T13:01:05Z",
+      "folder": "pilot-haiku/baseline-b"
+    },
+    {
+      "label": "claude-code-haiku-20261110T130502Z",
+      "started": "2026-11-10T13:05:02Z",
+      "runner": "claude-code",
+      "model": "haiku",
+      "executor": null,
+      "advisor": null,
+      "arms": [
+        "baseline"
+      ],
+      "trials": 2,
+      "first_trial": 2,
+      "tasks": [
+        "creative-short-script",
+        "longterm-notes-cli",
+        "multiagent-briefs",
+        "recovery-migration"
+      ],
+      "prompt_tier": "standard",
+      "prompt_characters": 14154,
+      "framework_version": "1.0.0",
+      "python": "3.13.18",
+      "platform": "Linux-6.18.44-fc-v338-x86_64-with-glibc2.39",
+      "claude_code_version": "2.1.322 (Claude Code)",
+      "agent_cmd": null,
+      "finished": "2026-11-10T13:12:57Z",
+      "folder": "pilot-haiku/baseline-b-t23"
+    },
+    {
+      "label": "claude-code-haiku-20261110T125701Z",
+      "started": "2026-11-10T12:57:01Z",
+      "runner": "claude-code",
+      "model": "haiku",
+      "executor": null,
+      "advisor": null,
+      "arms": [
+        "diavlo-mind"
+      ],
+      "trials": 1,
+      "tasks": [
+        "architecture-notifications",
+        "debugging-inventory",
+        "programming-duration",
+        "research-kestrel"
+      ],
+      "prompt_tier": "standard",
+      "prompt_characters": 14154,
+      "framework_version": "1.0.0",
+      "python": "3.13.18",
+      "platform": "Linux-6.18.44-fc-v338-x86_64-with-glibc2.39",
+      "claude_code_version": "2.1.322 (Claude Code)",
+      "agent_cmd": null,
+      "finished": "2026-11-10T13:00:40Z",
+      "folder": "pilot-haiku/dm-a"
+    },
+    {
+      "label": "claude-code-haiku-20261110T130502Z",
+      "started": "2026-11-10T13:05:02Z",
+      "runner": "claude-code",
+      "model": "haiku",
+      "executor": null,
+      "advisor": null,
+      "arms": [
+        "diavlo-mind"
+      ],
+      "trials": 2,
+      "first_trial": 2,
+      "tasks": [
+        "architecture-notifications",
+        "debugging-inventory",
+        "programming-duration",
+        "research-kestrel"
+      ],
+      "prompt_tier": "standard",
+      "prompt_characters": 14154,
+      "framework_version": "1.0.0",
+      "python": "3.13.18",
+      "platform": "Linux-6.18.44-fc-v338-x86_64-with-glibc2.39",
+      "claude_code_version": "2.1.322 (Claude Code)",
+      "agent_cmd": null,
+      "finished": "2026-11-10T13:11:35Z",
+      "folder": "pilot-haiku/dm-a-t23"
+    },
+    {
+      "label": "claude-code-haiku-20261110T125701Z",
+      "started": "2026-11-10T12:57:01Z",
+      "runner": "claude-code",
+      "model": "haiku",
+      "executor": null,
+      "advisor": null,
+      "arms": [
+        "diavlo-mind"
+      ],
+      "trials": 1,
+      "tasks": [
+        "creative-short-script",
+        "longterm-notes-cli",
+        "multiagent-briefs",
+        "recovery-migration"
+      ],
+      "prompt_tier": "standard",
+      "prompt_characters": 14154,
+      "framework_version": "1.0.0",
+      "python": "3.13.18",
+      "platform": "Linux-6.18.44-fc-v338-x86_64-with-glibc2.39",
+      "claude_code_version": "2.1.322 (Claude Code)",
+      "agent_cmd": null,
+      "finished": "2026-11-10T13:02:32Z",
+      "folder": "pilot-haiku/dm-b"
+    },
+    {
+      "label": "claude-code-haiku-20261110T130502Z",
+      "started": "2026-11-10T13:05:02Z",
+      "runner": "claude-code",
+      "model": "haiku",
+      "executor": null,
+      "advisor": null,
+      "arms": [
+        "diavlo-mind"
+      ],
+      "trials": 2,
+      "first_trial": 2,
+      "tasks": [
+        "creative-short-script",
+        "longterm-notes-cli",
+        "multiagent-briefs",
+        "recovery-migration"
+      ],
+      "prompt_tier": "standard",
+      "prompt_characters": 14154,
+      "framework_version": "1.0.0",
+      "python": "3.13.18",
+      "platform": "Linux-6.18.44-fc-v338-x86_64-with-glibc2.39",
+      "claude_code_version": "2.1.322 (Claude Code)",
+      "agent_cmd": null,
+      "finished": "2026-11-10T13:15:04Z",
+      "folder": "pilot-haiku/dm-b-t23"
+    }
+  ],
+  "overall": {
+    "success_rate": 0.9792
+  },
+  "groups": {
+    "claude-haiku-5-5 · baseline": {
+      "runs": 24,
+      "tasks": 8,
+      "trials_per_task": 3,
+      "success_rate": 0.9583,
+      "success_rate_as_first_scored": 0.9583,
+      "rescored_runs_changed": 0,
+      "tasks_solved_every_trial": 7,
+      "tasks_solved_some_trial": 8,
+      "checks_passed_rate": 0.9972,
+      "functional_correctness": 1.0,
+      "requirement_coverage": 0.9948,
+      "unresolved_errors_per_run": 0.0417,
+      "claimed_complete": 24,
+      "overclaims": 1,
+      "no_status_line": 0,
+      "code_quality_proxy": 0.9867,
+      "input_tokens_per_run": 299828.1667,
+      "output_tokens_per_run": 11473.4167,
+      "cost_usd_per_run": 0.0133,
+      "cost_usd_total": 0.3201,
+      "turns_per_run": 9.2083,
+      "tool_calls_per_run": 7.8333,
+      "seconds_per_run": 51.9958,
+      "stage_errors": 0
+    },
+    "claude-haiku-5-5 · diavlo-mind": {
+      "runs": 24,
+      "tasks": 8,
+      "trials_per_task": 3,
+      "success_rate": 1.0,
+      "success_rate_as_first_scored": 0.9583,
+      "rescored_runs_changed": 1,
+      "tasks_solved_every_trial": 8,
+      "tasks_solved_some_trial": 8,
+      "checks_passed_rate": 1.0,
+      "functional_correctness": 1.0,
+      "requirement_coverage": 1.0,
+      "unresolved_errors_per_run": 0.0,
+      "claimed_complete": 24,
+      "overclaims": 0,
+      "no_status_line": 0,
+      "code_quality_proxy": 0.9867,
+      "input_tokens_per_run": 410403.2917,
+      "output_tokens_per_run": 14386.2917,
+      "cost_usd_per_run": 0.0171,
+      "cost_usd_total": 0.4107,
+      "turns_per_run": 9.9167,
+      "tool_calls_per_run": 8.5417,
+      "seconds_per_run": 64.425,
+      "stage_errors": 0
+    }
+  },
+  "tasks": {
+    "architecture-notifications": {
+      "claude-haiku-5-5 · baseline": {
+        "category": "architecture",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "45/45",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 22954.3333,
+        "cost_usd": 0.0197,
+        "tool_calls": 4.6667,
+        "seconds": 102.0333,
+        "failed_checks": []
+      },
+      "claude-haiku-5-5 · diavlo-mind": {
+        "category": "architecture",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "45/45",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 24437.0,
+        "cost_usd": 0.0242,
+        "tool_calls": 6.0,
+        "seconds": 109.8333,
+        "failed_checks": []
+      }
+    },
+    "debugging-inventory": {
+      "claude-haiku-5-5 · baseline": {
+        "category": "debugging",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "45/45",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 6028.0,
+        "cost_usd": 0.0091,
+        "tool_calls": 13.6667,
+        "seconds": 28.0333,
+        "failed_checks": []
+      },
+      "claude-haiku-5-5 · diavlo-mind": {
+        "category": "debugging",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 2,
+        "checks": "45/45",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 8071.0,
+        "cost_usd": 0.0119,
+        "tool_calls": 15.0,
+        "seconds": 35.6,
+        "failed_checks": []
+      }
+    },
+    "programming-duration": {
+      "claude-haiku-5-5 · baseline": {
+        "category": "programming",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "57/57",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 7492.0,
+        "cost_usd": 0.008,
+        "tool_calls": 4.0,
+        "seconds": 30.8,
+        "failed_checks": []
+      },
+      "claude-haiku-5-5 · diavlo-mind": {
+        "category": "programming",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "57/57",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 10081.6667,
+        "cost_usd": 0.0106,
+        "tool_calls": 5.0,
+        "seconds": 42.4667,
+        "failed_checks": []
+      }
+    },
+    "research-kestrel": {
+      "claude-haiku-5-5 · baseline": {
+        "category": "research",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "87/87",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 3351.3333,
+        "cost_usd": 0.006,
+        "tool_calls": 4.0,
+        "seconds": 15.4,
+        "failed_checks": []
+      },
+      "claude-haiku-5-5 · diavlo-mind": {
+        "category": "research",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "87/87",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 3578.0,
+        "cost_usd": 0.0063,
+        "tool_calls": 4.3333,
+        "seconds": 16.2667,
+        "failed_checks": []
+      }
+    },
+    "creative-short-script": {
+      "claude-haiku-5-5 · baseline": {
+        "category": "creative",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "36/36",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 5673.6667,
+        "cost_usd": 0.0068,
+        "tool_calls": 3.6667,
+        "seconds": 25.5667,
+        "failed_checks": []
+      },
+      "claude-haiku-5-5 · diavlo-mind": {
+        "category": "creative",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "36/36",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 7734.0,
+        "cost_usd": 0.0106,
+        "tool_calls": 3.0,
+        "seconds": 34.2667,
+        "failed_checks": []
+      }
+    },
+    "longterm-notes-cli": {
+      "claude-haiku-5-5 · baseline": {
+        "category": "long-term-project",
+        "runs": 3,
+        "solved": 2,
+        "solved_as_first_scored": 2,
+        "checks": "29/30",
+        "requirement_coverage": 0.9583,
+        "overclaims": 1,
+        "output_tokens": 17296.0,
+        "cost_usd": 0.0228,
+        "tool_calls": 16.6667,
+        "seconds": 85.0667,
+        "failed_checks": [
+          "session-1-leaves-handoff"
+        ]
+      },
+      "claude-haiku-5-5 · diavlo-mind": {
+        "category": "long-term-project",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "30/30",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 23927.0,
+        "cost_usd": 0.0319,
+        "tool_calls": 18.0,
+        "seconds": 117.1,
+        "failed_checks": []
+      }
+    },
+    "multiagent-briefs": {
+      "claude-haiku-5-5 · baseline": {
+        "category": "multi-agent",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "24/24",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 18039.3333,
+        "cost_usd": 0.0224,
+        "tool_calls": 11.3333,
+        "seconds": 81.1,
+        "failed_checks": []
+      },
+      "claude-haiku-5-5 · diavlo-mind": {
+        "category": "multi-agent",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "24/24",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 23815.3333,
+        "cost_usd": 0.0275,
+        "tool_calls": 13.0,
+        "seconds": 104.0,
+        "failed_checks": []
+      }
+    },
+    "recovery-migration": {
+      "claude-haiku-5-5 · baseline": {
+        "category": "error-recovery",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "39/39",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 10952.6667,
+        "cost_usd": 0.0119,
+        "tool_calls": 4.6667,
+        "seconds": 47.9667,
+        "failed_checks": []
+      },
+      "claude-haiku-5-5 · diavlo-mind": {
+        "category": "error-recovery",
+        "runs": 3,
+        "solved": 3,
+        "solved_as_first_scored": 3,
+        "checks": "39/39",
+        "requirement_coverage": 1.0,
+        "overclaims": 0,
+        "output_tokens": 13446.3333,
+        "cost_usd": 0.0139,
+        "tool_calls": 4.0,
+        "seconds": 55.8667,
+        "failed_checks": []
+      }
+    }
+  }
+}

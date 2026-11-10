@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Nikolai-coder/diavlo-mind/memory/schemas/result-packet.schema.json",
+  "title": "DIAVLO MIND result packet",
+  "type": "object",
+  "required": [
+    "type",
+    "id",
+    "role",
+    "status",
+    "summary",
+    "evidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "const": "result"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "enum": [
+        "architect",
+        "planner",
+        "executor",
+        "researcher",
+        "reviewer",
+        "validator",
+        "optimizer",
+        "orchestrator"
+      ]
+    },
+    "status": {
+      "enum": [
+        "DONE",
+        "PARTIAL",
+        "BLOCKED",
+        "FAILED"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "deliverables": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "requirement",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "requirement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "met",
+              "unmet",
+              "not_verified"
+            ]
+          },
+          "level": {
+            "enum": [
+              "VERIFIED",
+              "SOURCED",
+              "ASSUMED",
+              "UNKNOWN"
+            ]
+          },
+          "proof": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "action"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "action": {
+            "enum": [
+              "created",
+              "modified",
+              "deleted"
+            ]
+          }
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "severity",
+          "finding"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "severity": {
+            "enum": [
+              "blocker",
+              "major",
+              "minor",
+              "note"
+            ]
+          },
+          "where": {
+            "type": "string"
+          },
+          "finding": {
+            "type": "string",
+            "minLength": 1
+          },
+          "suggestion": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "string"
+    }
+  }
+}

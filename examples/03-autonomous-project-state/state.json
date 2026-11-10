@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "project": "demo3",
+  "objective": "Ship the --since filter for the export tool",
+  "mode": "AUTONOMOUS",
+  "created": "2026-11-10T12:00:00Z",
+  "updated": "2026-11-10T12:00:00Z",
+  "definition_of_done": [
+    "python -m unittest discover -s tests passes",
+    "README documents --since"
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "text": "--since YYYY-MM-DD leaves out orders dated before that day",
+      "type": "functional",
+      "source": "user",
+      "status": "met",
+      "evidence": "export.py --since 2024-02-01 prints 3 rows"
+    },
+    {
+      "id": "R2",
+      "text": "An invalid date prints a clear error and exits with code 2",
+      "type": "functional",
+      "source": "user",
+      "status": "met",
+      "evidence": "--since 2024-13-01 -> error message, exit 2"
+    },
+    {
+      "id": "R3",
+      "text": "README documents the option",
+      "type": "format",
+      "source": "user",
+      "status": "met",
+      "evidence": "README.md documents --since"
+    },
+    {
+      "id": "R4",
+      "text": "Existing tests keep passing",
+      "type": "constraint",
+      "source": "implied",
+      "status": "met",
+      "evidence": "12 tests passed, 4 of them pre-existing"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T1",
+      "title": "Parse and validate --since",
+      "owner": "executor",
+      "status": "done",
+      "depends_on": [],
+      "requirements": [
+        "R1",
+        "R2"
+      ],
+      "attempts": 0,
+      "acceptance": "tests for valid and invalid dates pass",
+      "files": [
+        "export.py",
+        "tests/test_export.py"
+      ],
+      "evidence": "python -m unittest discover -s tests -> 12 passed"
+    },
+    {
+      "id": "T2",
+      "title": "Document the option",
+      "owner": "executor",
+      "status": "done",
+      "depends_on": [
+        "T1"
+      ],
+      "requirements": [
+        "R3"
+      ],
+      "attempts": 0,
+      "acceptance": "README shows --since",
+      "files": [
+        "README.md"
+      ],
+      "evidence": "README.md lines 8 and 14 mention --since"
+    },
+    {
+      "id": "T3",
+      "title": "Full regression run",
+      "owner": "validator",
+      "status": "done",
+      "depends_on": [
+        "T1",
+        "T2"
+      ],
+      "requirements": [
+        "R4"
+      ],
+      "attempts": 0,
+      "acceptance": "whole suite passes",
+      "evidence": "python -m unittest discover -s tests -> 12 passed, 0 failed"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D1",
+      "date": "2026-11-10",
+      "decision": "Validate the date in argparse (type=)",
+      "why": "argparse already prints the error and exits 2",
+      "alternatives": "manual check in main()",
+      "revisit_if": "a custom exit code is needed"
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "C1",
+      "time": "2026-11-10T12:00:00Z",
+      "summary": "T1 done and verified",
+      "next": "T2: document --since in README.md",
+      "open_questions": [
+        "Should malformed dates inside the CSV be reported?"
+      ]
+    }
+  ]
+}

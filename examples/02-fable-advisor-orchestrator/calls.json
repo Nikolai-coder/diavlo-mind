@@ -1,0 +1,35 @@
+[
+  {
+    "n": 1,
+    "role": "planner",
+    "spec": "claude-cli:fable",
+    "system_chars": 2974,
+    "prompt_chars": 2974,
+    "input_tokens": 15598,
+    "output_tokens": 3972,
+    "cost_usd": 0.408432,
+    "reply_chars": 8356
+  },
+  {
+    "n": 2,
+    "role": "executor",
+    "spec": "claude-cli:claude-haiku-4-5",
+    "system_chars": 3197,
+    "prompt_chars": 9839,
+    "input_tokens": 33009,
+    "output_tokens": 9442,
+    "cost_usd": 0.08667369999999999,
+    "reply_chars": 13509
+  },
+  {
+    "n": 3,
+    "role": "reviewer",
+    "spec": "claude-cli:fable",
+    "system_chars": 2876,
+    "prompt_chars": 6809,
+    "input_tokens": 17108,
+    "output_tokens": 2791,
+    "cost_usd": 0.2198944,
+    "reply_chars": 4214
+  }
+]

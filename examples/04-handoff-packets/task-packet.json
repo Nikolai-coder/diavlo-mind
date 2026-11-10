@@ -1,0 +1,33 @@
+{
+  "type": "task",
+  "id": "T1",
+  "role": "executor",
+  "mode": "STANDARD",
+  "objective": "export.py accepts --since YYYY-MM-DD and leaves out orders dated before that day.",
+  "context": [
+    "CLI entry point: export.py, function main(); filtering happens in select() (read both first)",
+    "Dates in orders.csv are ISO strings YYYY-MM-DD",
+    "Existing tests: tests/test_export.py, 4 tests, all passing (baseline)"
+  ],
+  "requirements": [
+    {"id": "R1", "text": "--since YYYY-MM-DD leaves out orders dated before that day; orders on that day are kept"},
+    {"id": "R2", "text": "An invalid date prints a clear error message and exits with code 2"},
+    {"id": "R4", "text": "Existing tests keep passing"}
+  ],
+  "constraints": {
+    "may_write": ["export.py", "tests/test_export.py"],
+    "read_only": ["everything else"],
+    "other": ["standard library only", "do not change the output format"]
+  },
+  "inputs": ["orders.csv"],
+  "deliverable": "The code change and tests, plus a result packet.",
+  "acceptance": [
+    "python -m unittest discover -s tests passes",
+    "python export.py orders.csv --since 2024-13-01 exits with code 2"
+  ],
+  "escalate_if": [
+    "a date in orders.csv is not in ISO form",
+    "the change needs a file outside may_write"
+  ],
+  "budget": "about 20 tool calls"
+}

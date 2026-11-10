@@ -1,0 +1,21 @@
+{
+  "id": "longterm-notes-cli",
+  "category": "long-term-project",
+  "title": "Four-milestone CLI built across two sessions with no shared memory",
+  "timeout_seconds": 1500,
+  "requirements": [
+    {"id": "R1", "text": "M1: add and list work and persist to notes.json"},
+    {"id": "R2", "text": "M2: delete works, unknown ids fail with exit code 1, ids are never reused"},
+    {"id": "R3", "text": "M3: search is case-insensitive and list --tag filters exactly"},
+    {"id": "R4", "text": "M4: export to Markdown and JSON, to stdout or a file"},
+    {"id": "R5", "text": "A missing notes.json is treated as empty; a corrupted one fails with exit code 1 and is left untouched"},
+    {"id": "R6", "text": "test_notes.py covers every milestone and passes"},
+    {"id": "R7", "text": "After the first session M1 and M2 work and a written handoff names what is left"},
+    {"id": "R8", "text": "Work from the first session still works at the end"}
+  ],
+  "stages": [
+    {"id": "session-1", "prompt": "prompt-session-1.md", "workspace": "main", "seed": "workspace"},
+    {"id": "session-2", "prompt": "prompt-session-2.md", "workspace": "main"}
+  ],
+  "check_workspace": "main"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "creative-short-script",
+  "category": "creative",
+  "title": "Thirty-second vertical video script under twelve production constraints",
+  "timeout_seconds": 900,
+  "requirements": [
+    {"id": "R1", "text": "script.json has title, duration 30.0 and 8 to 12 beats with the required fields"},
+    {"id": "R2", "text": "Beats start at 0.0, end at 30.0, are contiguous, and each lasts 1.5 to 4.0 seconds with at most one decimal"},
+    {"id": "R3", "text": "The first caption is a question of at most 6 words"},
+    {"id": "R4", "text": "Every caption has at most 32 characters and 6 words, on one line"},
+    {"id": "R5", "text": "Captions are all different except that the last repeats the first exactly"},
+    {"id": "R6", "text": "The title has at most 60 characters and contains Lantern Tide"},
+    {"id": "R7", "text": "Voiceover: at most 12 words per beat, 75 in total, empty in at most two beats"},
+    {"id": "R8", "text": "None of the banned words appears anywhere"},
+    {"id": "R9", "text": "The word wishlist appears in exactly one caption, in a beat starting at 22.0 or later"},
+    {"id": "R10", "text": "captions.srt is valid and matches the beats one to one"},
+    {"id": "R11", "text": "The release day Friday and the three platforms are each mentioned"},
+    {"id": "R12", "text": "No files other than script.json and captions.srt are created"}
+  ],
+  "stages": [
+    {"id": "main", "prompt": "prompt.md", "workspace": "main", "seed": "workspace"}
+  ],
+  "check_workspace": "main"
+}

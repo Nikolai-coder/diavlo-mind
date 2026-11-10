@@ -1,0 +1,98 @@
+name: Framework failure
+description: A model following DIAVLO MIND did the wrong thing, skipped a rule, or reported success without proof.
+title: "[failure] "
+labels: ["framework-failure"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A failure report is the raw material for improving the framework (`workflows/protocols/self-improvement.md`).
+        Remove secrets and private data from anything you paste.
+  - type: input
+    id: version
+    attributes:
+      label: DIAVLO MIND version
+      description: Content of the VERSION file, or the release tag.
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model and environment
+      description: Exact model id and where it ran (Claude Code, Codex, Gemini CLI, an API, a local server).
+      placeholder: "model id, host name and host version"
+    validations:
+      required: true
+  - type: dropdown
+    id: loaded
+    attributes:
+      label: How the framework was loaded
+      options:
+        - Agent Skill (skills folder or plugin)
+        - Prompt tier, micro
+        - Prompt tier, compact
+        - Prompt tier, standard
+        - Prompt tier, full
+        - scripts/dm_orchestrate.py
+        - Other (describe below)
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Execution mode
+      options:
+        - FAST
+        - STANDARD
+        - DEEP
+        - AUTONOMOUS PROJECT
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: The task
+      description: What you asked for, as you wrote it.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What the model did
+      description: Observable behaviour only, not the cause you suspect.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What it should have done
+      description: If a rule or procedure covers this, name it (for example "rule 5" or "p15-completion-verification").
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Transcript excerpt, failing check, command output or token counts.
+      render: text
+    validations:
+      required: true
+  - type: dropdown
+    id: cause
+    attributes:
+      label: Likely cause (optional)
+      description: The four categories of the self-improvement protocol.
+      options:
+        - missing_information
+        - inadequate_instructions
+        - insufficient_tools
+        - model_limitation
+        - I do not know
+  - type: checkboxes
+    id: repeat
+    attributes:
+      label: Reproducibility
+      options:
+        - label: I ran the same task more than once and it failed more than once.

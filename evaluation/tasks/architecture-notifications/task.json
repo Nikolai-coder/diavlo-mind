@@ -1,0 +1,21 @@
+{
+  "id": "architecture-notifications",
+  "category": "architecture",
+  "title": "Design a notification service under three hard constraints",
+  "timeout_seconds": 1200,
+  "requirements": [
+    {"id": "R1", "text": "architecture.json is valid and has every required top-level key"},
+    {"id": "R2", "text": "Components: at least three, unique ids, real responsibilities, acyclic dependencies"},
+    {"id": "R3", "text": "Every requirement R1-R8 of the brief is mapped to existing components, consistently in both places"},
+    {"id": "R4", "text": "Every constraint C1-C3 has a written explanation"},
+    {"id": "R5", "text": "Interfaces name provider, consumers, input, output and at least one error"},
+    {"id": "R6", "text": "Decisions list at least two options, a chosen one, rationale, trade-offs and a revisit condition"},
+    {"id": "R7", "text": "Risks have a mitigation and a way to validate"},
+    {"id": "R8", "text": "The chosen technologies respect the constraints (no extra datastore, broker or orchestrator)"},
+    {"id": "R9", "text": "DESIGN.md has the required sections and refers to every requirement and constraint by id"}
+  ],
+  "stages": [
+    {"id": "main", "prompt": "prompt.md", "workspace": "main", "seed": "workspace"}
+  ],
+  "check_workspace": "main"
+}

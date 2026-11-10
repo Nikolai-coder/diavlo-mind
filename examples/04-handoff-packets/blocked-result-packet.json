@@ -1,0 +1,18 @@
+{
+  "type": "result",
+  "id": "T1",
+  "role": "executor",
+  "status": "BLOCKED",
+  "summary": "Stopped before editing: two rows in orders.csv use DD/MM/YYYY, which the packet says cannot happen.",
+  "deliverables": [],
+  "evidence": [
+    {"requirement": "R1", "status": "not_verified", "level": "UNKNOWN", "proof": "not implemented: date format of the input is not what the packet states"}
+  ],
+  "changes": [],
+  "issues": [
+    {"severity": "blocker", "where": "orders.csv:14,22", "finding": "dates written as 03/02/2024", "suggestion": "decide whether to normalise the data or to accept both formats"}
+  ],
+  "assumptions": [],
+  "open_questions": ["Should --since compare against DD/MM/YYYY rows as day-first dates, or should those rows be rejected?"],
+  "next": "Answer the open question and resend the packet with the decision in context."
+}

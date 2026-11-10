@@ -1,0 +1,56 @@
+name: Improvement proposal
+description: Propose a change to a rule, procedure, agent, prompt, adapter or benchmark task.
+title: "[proposal] "
+labels: ["proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Changes to how the framework instructs a model are accepted on benchmark evidence, not on argument
+        (`workflows/protocols/self-improvement.md`). Typos and broken links do not need this form: open a pull request.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What would change
+      options:
+        - Wording of an existing procedure, mode, agent or prompt
+        - New procedure, role or template
+        - Adapter for an environment
+        - Benchmark task or check
+        - Script
+        - One of the ten rules or the loop (major version)
+    validations:
+      required: true
+  - type: textarea
+    id: failure
+    attributes:
+      label: The observable failure this addresses
+      description: Task, model, expected result, actual result. Link a "Framework failure" issue if one exists.
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: The proposed change
+      description: One change, as small as possible. Name the files.
+    validations:
+      required: true
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Hypothesis
+      description: Which metric should move, on which tasks, and what must not get worse.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence so far
+      description: compare_runs.py output for the suite before and after on the same model, with the number of trials. Write "none yet" if you have not measured.
+    validations:
+      required: true
+  - type: textarea
+    id: cost
+    attributes:
+      label: Cost of the change
+      description: Characters or tokens added to SKILL.md or the prompt tiers, and extra model calls if any.

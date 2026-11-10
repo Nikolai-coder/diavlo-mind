@@ -1,0 +1,1 @@
+Add a `--since YYYY-MM-DD` option to `export.py` that leaves out orders dated before that day (orders on that day are kept). An invalid date must print a clear error message and exit with code 2. Document the option in `README.md`. Keep the existing tests passing and add tests for the new behaviour.

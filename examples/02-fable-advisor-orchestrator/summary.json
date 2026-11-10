@@ -1,0 +1,46 @@
+{
+  "status": "DONE",
+  "mode": "standard",
+  "executor": "claude-cli:claude-haiku-4-5",
+  "advisor": "claude-cli:fable",
+  "check": {
+    "ran": true,
+    "passed": true,
+    "exit_code": 0,
+    "command": "python3 -m unittest discover -s tests"
+  },
+  "repairs": 0,
+  "escalations": 0,
+  "calls": 3,
+  "files_written": [
+    "export.py",
+    "tests/test_export.py",
+    "README.md"
+  ],
+  "problems": [],
+  "usage": {
+    "planner": {
+      "calls": 1,
+      "input_tokens": 15598,
+      "output_tokens": 3972,
+      "cost_usd": 0.408432,
+      "seconds": 36.16
+    },
+    "executor": {
+      "calls": 1,
+      "input_tokens": 33009,
+      "output_tokens": 9442,
+      "cost_usd": 0.08667369999999999,
+      "seconds": 60.74
+    },
+    "reviewer": {
+      "calls": 1,
+      "input_tokens": 17108,
+      "output_tokens": 2791,
+      "cost_usd": 0.2198944,
+      "seconds": 28.45
+    }
+  },
+  "review_verdict": "PASS",
+  "run_dir": "<run-dir>"
+}

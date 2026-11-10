@@ -1,0 +1,8 @@
+# Optional metadata read by OpenAI Codex and ChatGPT when this folder is installed as a skill.
+# Other clients ignore this file. Schema: https://learn.chatgpt.com/docs/build-skills
+interface:
+  display_name: "DIAVLO MIND"
+  short_description: "Requirements, right-sized effort, verification and evidence-based reports for any non-trivial task"
+  default_prompt: "Use $diavlo-mind for this task: list the requirements, pick the mode, verify the result and end with the evidence table."
+policy:
+  allow_implicit_invocation: true

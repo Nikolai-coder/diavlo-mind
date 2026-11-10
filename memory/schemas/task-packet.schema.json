@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Nikolai-coder/diavlo-mind/memory/schemas/task-packet.schema.json",
+  "title": "DIAVLO MIND task packet",
+  "type": "object",
+  "required": [
+    "type",
+    "id",
+    "role",
+    "objective",
+    "requirements",
+    "deliverable",
+    "acceptance"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "const": "task"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "enum": [
+        "architect",
+        "planner",
+        "executor",
+        "researcher",
+        "reviewer",
+        "validator",
+        "optimizer",
+        "orchestrator"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "FAST",
+        "STANDARD",
+        "DEEP",
+        "AUTONOMOUS"
+      ]
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 8
+    },
+    "context": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "text"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^R[0-9]+$"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "may_write": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "read_only": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "other": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deliverable": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "escalate_if": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "budget": {
+      "type": "string"
+    }
+  }
+}
