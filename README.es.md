@@ -4,6 +4,11 @@
 
 # DIAVLO MIND — Agent Skill y sistema de prompts para Claude Code, Codex, Gemini CLI y cualquier LLM
 
+[![validate](https://github.com/Nikolai-coder/diavlo-mind/actions/workflows/validate.yml/badge.svg)](https://github.com/Nikolai-coder/diavlo-mind/actions/workflows/validate.yml)
+![licencia: MIT](https://img.shields.io/badge/licencia-MIT-blue)
+![formato: Agent Skills](https://img.shields.io/badge/formato-Agent%20Skills-6f42c1)
+![Python 3.9+, sin dependencias](https://img.shields.io/badge/python-3.9%2B%20%C2%B7%20sin%20dependencias-3776ab)
+
 [English](README.md) · **Español**
 
 Un método de trabajo para agentes de IA, empaquetado para aplicarlo a tu propio modelo con un comando. Hace que el modelo escriba los requisitos, elija cuánto esfuerzo merece la tarea, mire antes de actuar, pruebe lo que ha construido e informe con evidencia. Incluye una **Agent Skill**, un **plugin de Claude Code con ocho subagentes**, **cuatro prompts de sistema portables**, un **orquestador para varios proveedores** pensado para modelos que solo chatean, y un **benchmark** que mide qué cambia todo esto.
@@ -191,7 +196,7 @@ Con cualquier servidor que hable el formato de chat de OpenAI, usando `--executo
 Solo para las herramientas opcionales. La skill y los prompts son texto plano.
 
 **¿Cómo sé que mi copia está intacta?**
-`python scripts/validate.py`, `python -m unittest discover -s tests` y `python evaluation/selftest.py`. Los mismos comandos corren en CI.
+`python scripts/validate.py`, `python -m unittest discover -s tests` y `python evaluation/selftest.py`. Los mismos comandos están en el flujo de CI, `.github/workflows/validate.yml`.
 
 **¿Por qué «Fable Edition»?**
 El método se diseñó en una sesión configurada para el modelo `claude-fable-5-2`, y el modo híbrido se demostró con ese modelo como asesor. El nombre deja constancia de ese origen. El repositorio no contiene, reproduce ni desbloquea ese modelo.
@@ -200,7 +205,7 @@ El método se diseñó en una sesión configurada para el modelo `claude-fable-5
 
 - **Implementado:** todo lo de la tabla «Qué hay dentro».
 - **Verificado ejecutándolo:** la validación del repositorio, los tests unitarios, el autotest del benchmark, la carga en Claude Code 2.1.322 en Linux, dos demostraciones reales y el benchmark piloto de 96 ejecuciones.
-- **No verificado:** llamadas reales a las API de Claude, OpenAI y Gemini; la instalación en Codex, Gemini CLI, Antigravity, ChatGPT y claude.ai; Windows y macOS fuera de CI.
+- **No verificado:** llamadas reales a las API de Claude, OpenAI y Gemini; la instalación en Codex, Gemini CLI, Antigravity, ChatGPT y claude.ai; Windows y macOS (el flujo de CI cubre ambos; la insignia de arriba indica si pasa).
 - **Propuesto, no construido:** un bucle con llamadas a herramientas para los adaptadores de API, la puntuación con juez de la calidad de arquitectura y de la parte creativa, y hooks que hagan cumplir las reglas de forma mecánica.
 
 El detalle, con la evidencia de cada línea, está en [`ARCHITECTURE.md`](ARCHITECTURE.md), sección 5.

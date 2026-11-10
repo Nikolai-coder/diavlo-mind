@@ -194,7 +194,7 @@ Through any server that speaks the OpenAI chat format, with `--executor compatib
 Only for the optional tools. The skill and the prompts are plain text.
 
 **How do I know my copy is intact?**
-`python scripts/validate.py`, `python -m unittest discover -s tests` and `python evaluation/selftest.py`. The same commands run in CI.
+`python scripts/validate.py`, `python -m unittest discover -s tests` and `python evaluation/selftest.py`. The same commands are in the CI workflow, `.github/workflows/validate.yml`.
 
 **Why "Fable Edition"?**
 The framework was designed in a session configured for the model `claude-fable-5-2`, and the hybrid mode was demonstrated with that model as advisor. The name records that origin. The repository does not contain, reproduce or unlock that model.
@@ -203,7 +203,7 @@ The framework was designed in a session configured for the model `claude-fable-5
 
 - **Implemented:** everything in the table "What is in the box".
 - **Verified by execution:** repository validation, the unit tests, the benchmark self-test, loading in Claude Code 2.1.322 on Linux, two live demonstrations, and the 96-run pilot benchmark.
-- **Not verified:** live calls to the Claude, OpenAI and Gemini APIs; installation in Codex, Gemini CLI, Antigravity, ChatGPT and claude.ai; Windows and macOS outside CI.
+- **Not verified:** live calls to the Claude, OpenAI and Gemini APIs; installation in Codex, Gemini CLI, Antigravity, ChatGPT and claude.ai; Windows and macOS (the CI workflow covers both; the badge at the top shows whether it passes).
 - **Proposed, not built:** a tool-calling loop for the API adapters, judged scoring of architecture and creative quality, and hooks that enforce the rules mechanically.
 
 The full account, with the evidence for each line, is in [`ARCHITECTURE.md`](ARCHITECTURE.md), section 5.

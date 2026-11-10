@@ -142,6 +142,18 @@ def replace_owner(root: Path, owner: str, repo: str = DEFAULT_REPO, previous_own
     return changed
 
 
+def written_owner(root: Path) -> Optional[str]:
+    """The account name currently written in the files (from the plugin manifest), or None while the placeholder is there."""
+    try:
+        manifest = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    match = re.search(r"github\.com/([^/\s]+)/", str(manifest.get("repository", "")))
+    if not match or match.group(1) == OWNER_TOKEN:
+        return None
+    return match.group(1)
+
+
 def changelog_section(text: str, version: str) -> str:
     """The body of the CHANGELOG entry for one version, without its heading."""
     match = re.search(rf"(?ms)^## \[{re.escape(version)}\][^\n]*\n(.*?)(?=^## \[|\Z)", text)
@@ -181,6 +193,9 @@ def release_notes(root: Path, version: str, owner: str, repo: str) -> str:
 # --------------------------------------------------------------------------
 
 def step_prepare(run: Runner, owner: str, repo: str, previous_owner: Optional[str], skip_tests: bool) -> None:
+    previous_owner = previous_owner or written_owner(ROOT)  # a copy published before carries its old account name
+    if previous_owner and previous_owner != owner:
+        print(f"    the files name the account {previous_owner}; it will be replaced by {owner}")
     hits = replace_owner(ROOT, owner, repo, previous_owner, write=not run.dry_run)
     verb = "would be updated" if run.dry_run else "updated"
     print(f"    owner name: {len(hits)} file(s) {verb}" + (f" ({', '.join(hits[:5])}{', …' if len(hits) > 5 else ''})" if hits else ""))
@@ -335,7 +350,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--repo", default=DEFAULT_REPO, help=f"repository name (default: {DEFAULT_REPO}; the skill folder keeps the name diavlo-mind either way)")
     parser.add_argument("--private", action="store_true", help="create a private repository (default: public)")
     parser.add_argument("--steps", help="comma-separated subset of the steps (default: all)")
-    parser.add_argument("--previous-owner", help="when republishing a copy: the account name currently written in the files")
+    parser.add_argument("--previous-owner", help="when republishing a copy: the account name currently written in the files "
+                                                 "(default: read from .claude-plugin/plugin.json)")
     parser.add_argument("--identity", choices=["noreply", "git"], default="noreply",
                         help="author of the commit: your GitHub no-reply address (default) or git's configured identity")
     parser.add_argument("--message", help="commit message (default: a standard one)")

@@ -65,6 +65,17 @@ class ReplaceOwnerTests(unittest.TestCase):
         self.assertEqual(changed, ["docs.md"])
         self.assertNotIn("first-owner", (self.root / "docs.md").read_text(encoding="utf-8"))
 
+    def test_written_owner_is_read_from_the_plugin_manifest(self):
+        manifest = self.root / ".claude-plugin"
+        manifest.mkdir()
+        (manifest / "plugin.json").write_text('{"repository": "https://github.com/' + TOKEN + '/diavlo-mind"}', encoding="utf-8")
+        self.assertIsNone(pg.written_owner(self.root))
+        pg.replace_owner(self.root, "first-owner")
+        self.assertEqual(pg.written_owner(self.root), "first-owner")
+        pg.replace_owner(self.root, "second-owner", previous_owner=pg.written_owner(self.root))
+        self.assertEqual(pg.written_owner(self.root), "second-owner")
+        self.assertNotIn("first-owner", (self.root / "docs.md").read_text(encoding="utf-8"))
+
     def test_second_run_changes_nothing(self):
         pg.replace_owner(self.root, "octo-test")
         self.assertEqual(pg.replace_owner(self.root, "octo-test"), [])
