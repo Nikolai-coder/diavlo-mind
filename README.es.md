@@ -40,6 +40,8 @@ python scripts/install.py antigravity     # Antigravity
 
 Abre una sesión nueva y dale trabajo real, o llámala por su nombre: `/diavlo-mind arregla el test de exportación que falla y dime qué has verificado`. La skill responde en el idioma del usuario.
 
+**Todas tus herramientas y «úsala siempre» en un solo paso.** En Windows, doble clic en `install-all.bat` (en otros sistemas, `python3 scripts/install_all.py`). Instala la skill en cada herramienta que encuentra y añade a las instrucciones globales de cada una una regla corta para que cargue DIAVLO MIND en cualquier tarea de varios pasos sin que se lo pidas. Ejecútalo antes con `--dry-run` para ver qué escribiría; `--uninstall` lo deshace. Detalles y límites en [INSTALL.md](INSTALL.md).
+
 Claude Code también puede instalarla como plugin desde este repositorio:
 
 ```bash

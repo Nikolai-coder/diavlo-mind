@@ -40,6 +40,8 @@ python scripts/install.py antigravity     # Antigravity
 
 Then start a new session and give it real work, or call it by name: `/diavlo-mind fix the failing export test and tell me what you verified`.
 
+**All the tools you have, and "use it by default", in one step.** On Windows double-click `install-all.bat` (elsewhere `python3 scripts/install_all.py`). It installs the skill in every tool it finds and adds a short rule to each tool's global instructions so it loads DIAVLO MIND on any multi-step task without being asked. Run it with `--dry-run` first to see what it would write; `--uninstall` undoes it. Details and limits in [INSTALL.md](INSTALL.md).
+
 Claude Code can also install it as a plugin from this repository:
 
 ```bash

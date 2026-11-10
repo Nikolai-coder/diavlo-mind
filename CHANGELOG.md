@@ -2,6 +2,13 @@
 
 All notable changes to DIAVLO MIND are recorded here. Versions follow semantic versioning: a change to the ten rules or the loop is a major version, a new or changed procedure is a minor version, wording and fixes are patches. Changes to the framework's instructions cite the benchmark evidence that justified them (`workflows/protocols/self-improvement.md`).
 
+## [Unreleased]
+
+### Added
+
+- **One-step install for every tool** — `install-all.bat` (Windows) and `scripts/install_all.py` detect Claude Code, Codex, Gemini CLI and Antigravity, install the skill in each, and add a short "use `diavlo-mind` on any multi-step task" rule to each tool's global instruction file (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`). The rule sits between marks, files are backed up before they change, a second run changes nothing, and `--uninstall` removes it. Tested against a throwaway home folder; the Windows batch file is exercised by the Windows CI job. Not tested: the four tools obeying the rule. English and Spanish rule text. See `INSTALL.md`.
+- `.gitattributes` keeps `*.bat` files exactly as stored (CRLF).
+
 ## [1.0.0] — 2026-11-10
 
 First release: the Fable Edition.

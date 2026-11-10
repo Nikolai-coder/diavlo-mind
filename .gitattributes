@@ -2,3 +2,6 @@
 * text=auto eol=lf
 *.png binary
 *.zip binary
+
+# Windows batch files are stored with CRLF as they are and never converted (git archive and ZIP downloads included).
+*.bat -text

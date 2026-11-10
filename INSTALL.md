@@ -15,6 +15,40 @@ Or download `DIAVLO-MIND-FABLE-EDITION.zip` from the releases page and unpack it
 
 ## 2. Install for your environment
 
+### All your AI tools at once
+
+On Windows, double-click `install-all.bat` or run it from a terminal. On macOS and Linux run `python3 scripts/install_all.py`. Same options everywhere:
+
+```bash
+install-all.bat --dry-run       # first: show what it would do, write nothing
+install-all.bat                 # install in the tools found on this computer
+install-all.bat --lang es       # write the rule in Spanish (default: the system language)
+install-all.bat --all           # all four tools, found or not
+install-all.bat --uninstall     # remove the skills and the rule
+```
+
+For each of Claude Code, Codex, Gemini CLI and Antigravity it does two things, only inside your own user folder:
+
+1. Installs the skill and, for Codex and Gemini CLI, the role agents: the same files as `install.py <tool>`.
+2. Adds a short rule to the tool's global instruction file, so the tool loads `diavlo-mind` on any task with more than one step without being asked:
+
+| Tool | Instruction file |
+|---|---|
+| Claude Code | `~/.claude/CLAUDE.md` |
+| Codex | `~/.codex/AGENTS.md` (or `$CODEX_HOME/AGENTS.md`) |
+| Gemini CLI and Antigravity | `~/.gemini/GEMINI.md` (the same file for both, written once) |
+
+How it treats your files:
+
+- The rule sits between `<!-- BEGIN DIAVLO-MIND -->` and `<!-- END DIAVLO-MIND -->` marks. Nothing outside them is changed; your line endings and UTF-8 byte-order mark are kept.
+- Before a file changes it is copied to `<name>.bak-<time>`. Running the script again only refreshes the block and makes no new copy when nothing changed.
+- A file that is not UTF-8 (PowerShell's `>` writes UTF-16) or that has a damaged mark is left alone, and the script says so and exits with an error.
+- A skill folder that this script did not install is moved to `~/.diavlo-mind/backups/`, not left among your skills. A folder it installed itself is replaced in place.
+- `--uninstall` removes the skills, the agent files and the block, and deletes an instruction file only if nothing else is in it.
+- Options: `--hosts claude-code,codex` to choose, `--no-rules` (skills only), `--rules-only`, `--no-agents`, `--executor-model` and `--advisor-model` (as in `install.py`).
+
+**What this does and does not guarantee.** A rule in an instruction file is an instruction to the model, not a switch: the tool follows it nearly always, not every time, and each activation adds about 3,000 tokens of context (see `adapters/claude-code.md`). The Gemini CLI and Antigravity paths were checked against their documentation on 2026-11-10. The tests run the script against a throwaway home folder on Linux, macOS and Windows in CI; no test has run the four tools themselves to see them obey the rule.
+
 ### Claude Code
 
 ```bash
