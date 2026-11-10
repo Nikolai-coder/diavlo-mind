@@ -180,6 +180,7 @@ everything listed in section 3.
 |---|---|
 | The repository is internally consistent | `python scripts/validate.py` |
 | Every script behaves as documented | `python -m unittest discover -s tests` |
+| The scripts and tests run on Linux, macOS and Windows | CI workflow `.github/workflows/validate.yml`, first run on 2026-11-10 with Python 3.13 |
 | The benchmark checks discriminate | `python evaluation/selftest.py` |
 | The skill, the plugin and the marketplace manifest load in Claude Code | `claude plugin validate`, `claude plugin list`, `claude plugin details`, recorded in `adapters/claude-code.md` |
 | The skill is followed in a live session and its report matches reality | `examples/01-claude-code-skill/` |
@@ -187,7 +188,7 @@ everything listed in section 3.
 | Measured effect of the framework on two small models | `evaluation/results/RESULTS.md` |
 
 **Not verified** — implemented from documentation, not executed here:
-the Claude API, OpenAI API and Gemini API calls against the live services (checked against a local mock only); installation in Codex, Gemini CLI, Antigravity, ChatGPT and claude.ai; Windows and macOS.
+the Claude API, OpenAI API and Gemini API calls against the live services (checked against a local mock only); installation in Codex, Gemini CLI, Antigravity, ChatGPT and claude.ai; installing into Claude Code on Windows and macOS.
 
 **Proposed** — described but not built:
 a tool-calling agent loop for the API adapters; rubric-based judging of architecture and creative quality (rubrics exist in `evaluation/rubrics/`, no scores were produced); hooks that enforce rules mechanically in Claude Code.

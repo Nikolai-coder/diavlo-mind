@@ -22,7 +22,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { os: ubuntu-latest, python: "3.9" }
+          # Oldest supported Python. The newest Ubuntu image has no 3.9 build, so this job pins an image that does.
+          - { os: ubuntu-24.04, python: "3.9" }
           - { os: ubuntu-latest, python: "3.13" }
           - { os: macos-latest, python: "3.13" }
           - { os: windows-latest, python: "3.13" }
@@ -30,9 +31,9 @@ jobs:
       PYTHONDONTWRITEBYTECODE: "1"
       PYTHONUTF8: "1"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python }}
 

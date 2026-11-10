@@ -105,6 +105,7 @@ Claims in a report carry a level, **VERIFIED**, **SOURCED**, **ASSUMED** or **UN
 | [`evaluation/`](evaluation/) | Eight benchmark tasks with hidden checks and reference solutions, the harness, scoring, paired comparison, published results |
 | [`examples/`](examples/) | Two recorded live runs and two script walkthroughs |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Design, key decisions, and the line between implemented, verified and proposed |
+| [`docs/`](docs/) | The project's web page |
 
 ## Where it works
 
@@ -202,8 +203,8 @@ The framework was designed in a session configured for the model `claude-fable-5
 ## Status
 
 - **Implemented:** everything in the table "What is in the box".
-- **Verified by execution:** repository validation, the unit tests, the benchmark self-test, loading in Claude Code 2.1.322 on Linux, two live demonstrations, and the 96-run pilot benchmark.
-- **Not verified:** live calls to the Claude, OpenAI and Gemini APIs; installation in Codex, Gemini CLI, Antigravity, ChatGPT and claude.ai; Windows and macOS (the CI workflow covers both; the badge at the top shows whether it passes).
+- **Verified by execution:** repository validation, the unit tests, the benchmark self-test and packaging on Linux, macOS and Windows (CI, Python 3.13); loading in Claude Code 2.1.322 on Linux; two live demonstrations; and the 96-run pilot benchmark.
+- **Not verified:** live calls to the Claude, OpenAI and Gemini APIs; installation in Codex, Gemini CLI, Antigravity, ChatGPT and claude.ai; installing into Claude Code on Windows and macOS (the scripts and tests pass there, the install itself was not tried).
 - **Proposed, not built:** a tool-calling loop for the API adapters, judged scoring of architecture and creative quality, and hooks that enforce the rules mechanically.
 
 The full account, with the evidence for each line, is in [`ARCHITECTURE.md`](ARCHITECTURE.md), section 5.

@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DIAVLO MIND — Agent Skills framework for Claude Code, Codex, Gemini CLI and any LLM</title>
+<meta name="description" content="A working method for AI agents: one Agent Skill and Claude Code plugin with 8 subagents, portable system prompts, and a benchmark that measures what it changes.">
+<meta name="keywords" content="agent skills, claude code skills, claude code plugin, subagents, codex skills, gemini cli, system prompt, ai agents, multi-agent, llm benchmark, context engineering">
+<link rel="canonical" href="https://nikolai-coder.github.io/diavlo-mind/">
+<link rel="icon" type="image/png" href="icon.png">
+<meta name="theme-color" content="#0f1014">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DIAVLO MIND">
+<meta property="og:title" content="DIAVLO MIND — a working method for AI agents">
+<meta property="og:description" content="One Agent Skill for Claude Code, Codex, Gemini CLI and any LLM: requirements, verification, multi-agent roles, project memory, and a benchmark that measures what it changes.">
+<meta property="og:url" content="https://nikolai-coder.github.io/diavlo-mind/">
+<meta property="og:image" content="https://nikolai-coder.github.io/diavlo-mind/social-preview.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DIAVLO MIND — a working method for AI agents">
+<meta name="twitter:description" content="One Agent Skill for Claude Code, Codex, Gemini CLI and any LLM, with a benchmark that measures what it changes.">
+<meta name="twitter:image" content="https://nikolai-coder.github.io/diavlo-mind/social-preview.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  "name": "DIAVLO MIND",
+  "description": "Agent Skills framework for Claude Code, Codex, Gemini CLI, ChatGPT and any LLM: planning, verification, multi-agent orchestration, project memory, portable system prompts, and a benchmark with hidden checks.",
+  "codeRepository": "https://github.com/Nikolai-coder/diavlo-mind",
+  "url": "https://nikolai-coder.github.io/diavlo-mind/",
+  "license": "https://opensource.org/licenses/MIT",
+  "programmingLanguage": "Python",
+  "runtimePlatform": "Python 3.9+",
+  "version": "1.0.0",
+  "dateCreated": "2026-11-10",
+  "author": { "@type": "Person", "name": "Diavlo" },
+  "keywords": "agent skills, claude code, claude skills, subagents, codex, gemini cli, system prompt, multi-agent, llm evaluation, prompt engineering"
+}
+</script>
+<style>
+  :root {
+    --ink: #0f1014; --panel: #181a20; --line: #2c2f39; --paper: #ece9e2; --muted: #9a9eab; --accent: #ff4e2c; --green: #4ac990;
+    --sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ink); color: var(--paper); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--paper); text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  a:hover { color: var(--accent); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; font: 700 14px/1 var(--mono); letter-spacing: .22em; text-decoration: none; }
+  nav a { font-size: 15px; margin-left: 22px; text-decoration: none; color: var(--muted); }
+  nav a:hover { color: var(--paper); }
+  .label { font: 700 13px/1 var(--mono); letter-spacing: .2em; color: var(--accent); text-transform: uppercase; }
+  .hero { padding: 72px 0 40px; }
+  h1 { font-size: clamp(44px, 8.4vw, 96px); line-height: .98; letter-spacing: -.035em; margin: 22px 0 26px; font-weight: 900; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede { font-size: clamp(18px, 2.4vw, 23px); line-height: 1.5; color: var(--paper); max-width: 46ch; margin: 0 0 34px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn { display: inline-block; padding: 15px 24px; border-radius: 12px; font-weight: 700; text-decoration: none; border: 2px solid var(--line); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #14100e; }
+  .btn.primary:hover { background: #ff6a4d; color: #14100e; }
+  .btn:hover { border-color: var(--accent); }
+  .loop { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding: 30px 0 8px; font: 700 15px/1 var(--mono); letter-spacing: .06em; }
+  .loop i { color: var(--muted); font-style: normal; }
+  .loop .prove { color: var(--accent); }
+  section { padding: 58px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: clamp(28px, 4.4vw, 44px); line-height: 1.08; letter-spacing: -.025em; margin: 14px 0 18px; font-weight: 800; }
+  p { max-width: 68ch; }
+  .muted { color: var(--muted); }
+  pre { background: #121318; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; font: 14.5px/1.65 var(--mono); margin: 12px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+  code { font-family: var(--mono); font-size: .92em; }
+  .c { color: var(--muted); }
+  .cols { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 22px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0 0 4px; color: var(--muted); font-size: 15.5px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-top: 24px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px 20px 16px; }
+  .stat b { display: block; font-size: 54px; line-height: 1; font-weight: 900; letter-spacing: -.03em; color: var(--accent); }
+  .stat span { color: var(--muted); font-size: 15px; }
+  .table { overflow-x: auto; margin-top: 20px; border: 1px solid var(--line); border-radius: 14px; }
+  table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 15.5px; }
+  th, td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font: 700 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); background: var(--panel); }
+  tr:last-child td { border-bottom: 0; }
+  td strong { color: var(--paper); }
+  ul.plain { padding-left: 20px; max-width: 70ch; }
+  ul.plain li { margin: 8px 0; }
+  details { border-bottom: 1px solid var(--line); padding: 16px 0; max-width: 78ch; }
+  summary { cursor: pointer; font-weight: 700; font-size: 18px; }
+  details p { color: var(--muted); margin: 10px 0 0; }
+  footer { padding: 44px 0 70px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14.5px; }
+  footer p { max-width: 80ch; }
+  @media (max-width: 640px) { nav a { margin-left: 14px; } .hero { padding-top: 40px; } section { padding: 44px 0; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="https://github.com/Nikolai-coder/diavlo-mind" aria-label="DIAVLO MIND on GitHub">
+      <svg width="34" height="34" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M67.2 9.5A44 44 0 1 1 32.8 9.5" fill="none" stroke="#3a3e4a" stroke-width="4"/>
+        <circle cx="67.2" cy="9.5" r="6" fill="#ece9e2"/><circle cx="92.6" cy="38.8" r="6" fill="#ece9e2"/>
+        <circle cx="84.8" cy="76.9" r="6" fill="#ece9e2"/><circle cx="50" cy="94" r="6" fill="#ece9e2"/>
+        <circle cx="15.2" cy="76.9" r="6" fill="#ece9e2"/><circle cx="7.4" cy="38.8" r="10" fill="#ff4e2c"/>
+        <circle cx="32.8" cy="9.5" r="6" fill="#9a9eab"/>
+      </svg>
+      DIAVLO MIND
+    </a>
+    <nav>
+      <a href="#install">Install</a>
+      <a href="#results">Results</a>
+      <a href="https://github.com/Nikolai-coder/diavlo-mind/blob/main/README.es.md" hreflang="es">Español</a>
+      <a href="https://github.com/Nikolai-coder/diavlo-mind">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="label">Agent Skill · prompt framework · benchmark</div>
+      <h1>A working method for <em>AI agents.</em></h1>
+      <p class="lede">DIAVLO MIND makes a model write down the requirements, pick an effort level, look before it acts, test what it built and report with evidence. One skill for Claude Code, Codex, Gemini CLI and any LLM.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/Nikolai-coder/diavlo-mind">Get it on GitHub</a>
+        <a class="btn" href="#results">See what was measured</a>
+      </div>
+      <div class="loop" aria-label="The seven-step loop">
+        <span>FRAME</span><i>→</i><span>SCOPE</span><i>→</i><span>GROUND</span><i>→</i><span>PLAN</span><i>→</i><span>BUILD</span><i>→</i><span class="prove">PROVE</span><i>→</i><span>DELIVER</span>
+      </div>
+    </div>
+
+    <section id="install">
+      <div class="label">Install</div>
+      <h2>Two commands. No dependencies.</h2>
+      <p class="muted">Plain-text instructions plus optional Python tools that use the standard library only. Nothing is compiled and nothing is downloaded at run time.</p>
+      <div class="cols">
+        <div class="card">
+          <h3>Claude Code, Codex, Gemini CLI, Antigravity</h3>
+          <p>The installer copies the skill where your agent looks for skills.</p>
+<pre>git clone https://github.com/Nikolai-coder/diavlo-mind
+cd diavlo-mind
+python scripts/install.py claude-code
+<span class="c"># or: codex | gemini-cli | antigravity</span></pre>
+        </div>
+        <div class="card">
+          <h3>Claude Code plugin</h3>
+          <p>The repository is also a plugin marketplace: one skill and eight subagents.</p>
+<pre>claude plugin marketplace add Nikolai-coder/diavlo-mind
+claude plugin install diavlo-mind@diavlo</pre>
+        </div>
+        <div class="card">
+          <h3>Any chat model or API</h3>
+          <p>Paste one of four system prompts, from 1,500 characters up, or run the bundled orchestrator.</p>
+<pre><span class="c"># custom GPTs, project instructions</span>
+prompts/system/diavlo-mind-compact.md
+<span class="c"># any API, with your own test command</span>
+python scripts/dm_orchestrate.py --help</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="inside">
+      <div class="label">What is inside</div>
+      <h2>An operating procedure, not a personality prompt.</h2>
+      <p class="muted">Every procedure describes actions another agent can perform and an outsider can observe: read this, run that, write this down, report in this form.</p>
+      <div class="stats">
+        <div class="stat"><b>10</b><span>rules, fingerprinted so they cannot change unrecorded</span></div>
+        <div class="stat"><b>4</b><span>effort modes: fast, standard, deep, autonomous</span></div>
+        <div class="stat"><b>20</b><span>step-by-step procedures, loaded on demand</span></div>
+        <div class="stat"><b>8</b><span>agent roles with separated powers</span></div>
+        <div class="stat"><b>4</b><span>portable system-prompt tiers</span></div>
+        <div class="stat"><b>8</b><span>benchmark tasks with hidden checks</span></div>
+      </div>
+    </section>
+
+    <section id="results">
+      <div class="label">Measured, not promised</div>
+      <h2>96 benchmark runs. Here is what happened.</h2>
+      <p class="muted">Eight tasks, three trials each, with and without the framework, scored by hidden checks. Every run is published.</p>
+      <div class="table">
+        <table>
+          <thead><tr><th>Model</th><th>Without</th><th>With DIAVLO MIND</th><th>Cost with / without</th><th>Established?</th></tr></thead>
+          <tbody>
+            <tr><td><code>claude-haiku-4-5</code></td><td>14 of 24 solved</td><td><strong>18 of 24 solved</strong></td><td>0.96</td><td>No. Paired sign test p = 0.22</td></tr>
+            <tr><td><code>claude-haiku-5-5</code></td><td>23 of 24 solved</td><td>24 of 24 (23 as first scored)</td><td>1.28</td><td>Cannot be tested: ceiling</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="plain">
+        <li>On the older model the direction favours the framework, mostly on debugging and error recovery. With 24 pairs it could still be chance.</li>
+        <li>On the newer model there was nothing left to gain on this suite, and the framework cost 28% more.</li>
+        <li>All 96 runs ended by claiming the task complete; 17 of them were not. The framework lowered the number of failed runs on the older model from 10 to 6. It did not make a failing run admit it.</li>
+        <li>Four failures of the framework itself are recorded as open, and four checks that proved stricter than their task text were corrected with both outcomes published.</li>
+      </ul>
+      <p><a href="https://github.com/Nikolai-coder/diavlo-mind/blob/main/evaluation/results/RESULTS.md">Full results, failures and per-run records</a> · <a href="https://github.com/Nikolai-coder/diavlo-mind/blob/main/evaluation/README.md">How to repeat it on your model</a></p>
+    </section>
+
+    <section id="where">
+      <div class="label">Where it works</div>
+      <h2>Executed in one place, documented for the rest.</h2>
+      <div class="table">
+        <table>
+          <thead><tr><th>Environment</th><th>How</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Claude Code</strong></td><td>Skill, plugin, eight subagents</td><td>Executed: validated, installed and run on a live task</td></tr>
+            <tr><td>Claude API, OpenAI API, Gemini API</td><td>System prompt or the orchestrator</td><td>Request format checked against the documentation and a local mock; live APIs not called</td></tr>
+            <tr><td>Codex, ChatGPT, Gemini CLI, Antigravity</td><td>Skill folders, converted agents or a prompt tier</td><td>Written from documentation; not executed</td></tr>
+            <tr><td>Local and other models</td><td>A prompt tier, or the orchestrator</td><td>Providers covered by tests; no third-party server was run</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="label">Questions</div>
+      <h2>Short answers.</h2>
+      <details><summary>Does it make a small model as capable as a large one?</summary><p>No. Instructions change what a model is asked to do, not what it can do. The table above is the honest size of the effect, including the case where there was none.</p></details>
+      <details><summary>Is it a leaked system prompt or a jailbreak?</summary><p>No. It was written from scratch as observable procedures. It does not ask a model to reveal private reasoning and does not try to remove any safeguard.</p></details>
+      <details><summary>Do I need Python?</summary><p>Only for the optional tools. The skill and the prompts are plain text.</p></details>
+      <details><summary>How do I know my copy is intact?</summary><p>Run <code>python scripts/validate.py</code>, <code>python -m unittest discover -s tests</code> and <code>python evaluation/selftest.py</code>.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    <p>MIT licence. A project by Diavlo, designed and built with Claude in a session configured for the model <code>claude-fable-5-2</code>.</p>
+    <p>DIAVLO MIND is an independent project. It is not affiliated with, endorsed by or sponsored by Anthropic, OpenAI or Google. Claude, Claude Code, ChatGPT, Codex, Gemini and Antigravity are trademarks of their respective owners and are named here only to say where the framework can be used.</p>
+    <p><a href="https://github.com/Nikolai-coder/diavlo-mind">Repository</a> · <a href="https://github.com/Nikolai-coder/diavlo-mind/blob/main/INSTALL.md">Install guide</a> · <a href="https://github.com/Nikolai-coder/diavlo-mind/blob/main/ARCHITECTURE.md">Architecture</a> · <a href="https://github.com/Nikolai-coder/diavlo-mind/releases">Releases</a></p>
+  </footer>
+</div>
+</body>
+</html>

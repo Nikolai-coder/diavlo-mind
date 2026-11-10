@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use DIAVLO MIND or its benchmark in your work, please cite the repository."
+type: software
+title: "DIAVLO MIND: an Agent Skills framework with a benchmark that measures what it changes"
+abstract: >-
+  A working method for AI agents packaged as an Agent Skill, a Claude Code plugin with eight
+  role agents, four portable system prompts and a multi-provider orchestrator, together with
+  an eight-task benchmark with hidden checks and the results of a 96-run pilot.
+authors:
+  - name: "Diavlo"
+version: "1.0.0"
+date-released: "2026-11-10"
+license: MIT
+repository-code: "https://github.com/Nikolai-coder/diavlo-mind"
+url: "https://github.com/Nikolai-coder/diavlo-mind"
+keywords:
+  - agent skills
+  - Claude Code
+  - AI agents
+  - multi-agent systems
+  - prompt engineering
+  - LLM evaluation

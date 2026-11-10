@@ -107,6 +107,7 @@ Cada afirmación de un informe lleva un nivel, **VERIFIED**, **SOURCED**, **ASSU
 | [`evaluation/`](evaluation/) | Ocho tareas de benchmark con comprobaciones ocultas y soluciones de referencia, el arnés, la puntuación, la comparación pareada y los resultados publicados |
 | [`examples/`](examples/) | Dos ejecuciones reales grabadas y dos recorridos con los scripts |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Diseño, decisiones clave y la frontera entre implementado, verificado y propuesto |
+| [`docs/`](docs/) | La página web del proyecto |
 
 ## Dónde funciona
 
@@ -204,8 +205,8 @@ El método se diseñó en una sesión configurada para el modelo `claude-fable-5
 ## Estado
 
 - **Implementado:** todo lo de la tabla «Qué hay dentro».
-- **Verificado ejecutándolo:** la validación del repositorio, los tests unitarios, el autotest del benchmark, la carga en Claude Code 2.1.322 en Linux, dos demostraciones reales y el benchmark piloto de 96 ejecuciones.
-- **No verificado:** llamadas reales a las API de Claude, OpenAI y Gemini; la instalación en Codex, Gemini CLI, Antigravity, ChatGPT y claude.ai; Windows y macOS (el flujo de CI cubre ambos; la insignia de arriba indica si pasa).
+- **Verificado ejecutándolo:** la validación del repositorio, los tests unitarios, el autotest del benchmark y el empaquetado en Linux, macOS y Windows (CI, Python 3.13); la carga en Claude Code 2.1.322 en Linux; dos demostraciones reales; y el benchmark piloto de 96 ejecuciones.
+- **No verificado:** llamadas reales a las API de Claude, OpenAI y Gemini; la instalación en Codex, Gemini CLI, Antigravity, ChatGPT y claude.ai; la instalación en Claude Code sobre Windows y macOS (los scripts y los tests pasan ahí, la instalación en sí no se probó).
 - **Propuesto, no construido:** un bucle con llamadas a herramientas para los adaptadores de API, la puntuación con juez de la calidad de arquitectura y de la parte creativa, y hooks que hagan cumplir las reglas de forma mecánica.
 
 El detalle, con la evidencia de cada línea, está en [`ARCHITECTURE.md`](ARCHITECTURE.md), sección 5.

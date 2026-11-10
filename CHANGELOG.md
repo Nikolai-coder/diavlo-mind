@@ -20,10 +20,11 @@ First release: the Fable Edition.
 - **Benchmark** — eight tasks with hidden checks and reference solutions, a harness with five runners, scoring, paired comparison with exact sign tests, export of publishable results, and a self-test.
 - **Examples** — two recorded live runs and two script walkthroughs.
 - **Core-rules lock** — fingerprint of the ten rules, enforced by the validator.
+- **Project files** — code of conduct, security policy, citation file, issue and pull-request templates, CI workflow, and a web page in `docs/`.
 
 ### Verified in this release
 
-- Repository validation, unit tests and benchmark self-test pass (commands in `INSTALL.md`, section 4).
+- Repository validation, unit tests, benchmark self-test and packaging pass on Linux, macOS and Windows with Python 3.13 in CI (commands in `INSTALL.md`, section 4).
 - The skill, plugin and marketplace manifest load in Claude Code 2.1.322.
 - Pilot benchmark, 96 runs on two small models with and without the framework. On the older model the framework arm solved 18 of 24 runs against 14 of 24 (not statistically established, p = 0.22); on the newer model both arms were at the ceiling and the framework cost 28% more. Full results, failures of the framework arm and limits in `evaluation/results/RESULTS.md`.
 
@@ -41,5 +42,5 @@ Four failures observed in the pilot are recorded in `evaluation/improvement/fail
 
 - Live calls to the Claude, OpenAI and Gemini APIs (checked against a local mock of the documented formats only).
 - Installation in Codex, Gemini CLI, Antigravity, ChatGPT and claude.ai.
-- Windows and macOS (the CI workflow covers them; it had not run when this entry was written).
+- Installing into Claude Code on Windows and macOS (the scripts and tests pass there in CI; the install itself was not tried).
 - The stronger reference model of the benchmark (configuration C) and any non-Claude model.
