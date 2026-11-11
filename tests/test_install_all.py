@@ -1,4 +1,5 @@
 """Tests for scripts/install_all.py and install-all.bat: every AI tool at once, with the default-use rule."""
+import json
 import os
 import subprocess
 import sys
@@ -301,6 +302,66 @@ class BatchFileTests(unittest.TestCase):
         self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
         self.assertIn("DRY RUN", out.stdout)
         self.assertEqual(list(Path(tmp.name).iterdir()), [])
+
+
+class SetupBatchFileTests(unittest.TestCase):
+    """DIAVLO-MIND-Setup.bat: installs Python when missing, fetches the files when alone, then runs install_all.py."""
+
+    def setUp(self):
+        self.data = (ROOT / "DIAVLO-MIND-Setup.bat").read_bytes()
+        self.text = self.data.decode("ascii")
+
+    def test_crlf_only_and_plain_ascii(self):
+        self.assertEqual(self.data.count(b"\n"), self.data.count(b"\r\n"), "a batch file needs CRLF line endings")
+        self.assertFalse([byte for byte in self.data if byte > 127], "batch files are read in the console's code page: keep ASCII")
+
+    def test_it_runs_the_installer_with_the_arguments_it_was_given(self):
+        self.assertIn(r'%PYCMD% "%DM_SRC%scripts\install_all.py" %*', self.text)
+        self.assertIn("sys.version_info >= (3, 9)", self.text)
+        self.assertIn("exit /b %RC%", self.text)
+
+    def test_python_is_installed_for_the_user_only_and_checked(self):
+        self.assertIn("--scope user", self.text)
+        self.assertIn("InstallAllUsers=0 InstallLauncherAllUsers=0", self.text)
+        self.assertIn("Get-FileHash -Algorithm MD5", self.text)
+        self.assertIn("Python Software Foundation", self.text)
+        self.assertRegex(self.text, r'set "PY_MD5=[0-9a-f]{32}"')
+
+    def test_it_downloads_from_this_repository_only_when_alone(self):
+        self.assertIn(r'if exist "%~dp0SKILL.md" if exist "%~dp0scripts\install_all.py" goto havesource', self.text)
+        self.assertIn("/releases/latest/download/DIAVLO-MIND-FABLE-EDITION.zip", self.text)
+        metadata = json.loads((ROOT / ".github" / "repo-metadata.json").read_text(encoding="utf-8"))
+        self.assertIn("DIAVLO-MIND-Setup.bat", metadata["release"]["assets"], "the setup file must be attached to releases")
+
+    @unittest.skipUnless(os.name == "nt", "needs Windows")
+    def test_dry_run_through_the_real_batch_file(self):  # pragma: no cover - runs on the Windows CI job
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        env = dict(os.environ, DM_HOME=tmp.name)
+        out = subprocess.run(["cmd", "/c", str(ROOT / "DIAVLO-MIND-Setup.bat"), "--all", "--dry-run", "--lang", "en"],
+                             capture_output=True, text=True, encoding="utf-8", errors="replace", env=env)
+        self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
+        self.assertIn("OK: Python", out.stdout)
+        self.assertIn("DRY RUN", out.stdout)
+        self.assertEqual(list(Path(tmp.name).iterdir()), [])
+
+    @unittest.skipUnless(os.name == "nt" and os.environ.get("CI"), "needs Windows and network (CI only)")
+    def test_alone_in_an_empty_folder_it_downloads_the_files(self):  # pragma: no cover - runs on the Windows CI job
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+        (root / "downloads").mkdir()
+        alone = root / "downloads" / "DIAVLO-MIND-Setup.bat"
+        alone.write_bytes(self.data)
+        env = dict(os.environ, DM_HOME=str(root / "home"), USERPROFILE=str(root / "profile"))
+        out = subprocess.run(["cmd", "/c", str(alone), "--all", "--dry-run", "--lang", "en"],
+                             capture_output=True, text=True, encoding="utf-8", errors="replace", env=env)
+        self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
+        source = root / "profile" / ".diavlo-mind" / "source"
+        self.assertTrue((source / "SKILL.md").is_file(), out.stdout + out.stderr)
+        self.assertTrue((source / "scripts" / "install_all.py").is_file())
+        self.assertIn("DRY RUN", out.stdout)
+        self.assertFalse((root / "home").exists(), "a dry run writes nothing in the home folder")
 
 
 if __name__ == "__main__":

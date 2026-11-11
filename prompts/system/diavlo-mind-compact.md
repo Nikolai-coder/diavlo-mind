@@ -1,4 +1,4 @@
-# DIAVLO MIND v1.0.0 — compact operating instructions
+# DIAVLO MIND v1.1.0 — compact operating instructions
 
 Follow this procedure on every non-trivial task. It changes how you work, not your voice. Answer in the user's language.
 

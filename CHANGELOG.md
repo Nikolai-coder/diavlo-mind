@@ -4,8 +4,11 @@ All notable changes to DIAVLO MIND are recorded here. Versions follow semantic v
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-11-11
+
 ### Added
 
+- **Windows setup in one file** — `DIAVLO-MIND-Setup.bat`, attached to every release. Double-click it on a computer with nothing installed: it looks for Python 3.9 or later and, if there is none, installs Python 3.12 for the current user only (winget when available, otherwise the official python.org installer after checking its MD5 checksum and its Python Software Foundation signature); if it is not inside a DIAVLO MIND folder it downloads the latest release (falling back to the `main` branch) into `%USERPROFILE%\.diavlo-mind\source`; then it runs `scripts/install_all.py` with the options it was given. No administrator rights. Verified: the Windows CI job runs it with `--dry-run` from the repository folder. Not verified on a real machine: the winget and python.org install paths and the download path. `install-all.bat` now points to it when Python is missing.
 - **One-step install for every tool** — `install-all.bat` (Windows) and `scripts/install_all.py` detect Claude Code, Codex, Gemini CLI and Antigravity, install the skill in each, and add a short "use `diavlo-mind` on any multi-step task" rule to each tool's global instruction file (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`). The rule sits between marks, files are backed up before they change, a second run changes nothing, and `--uninstall` removes it. Tested against a throwaway home folder; the Windows batch file is exercised by the Windows CI job. Not tested: the four tools obeying the rule. English and Spanish rule text. See `INSTALL.md`.
 - `.gitattributes` keeps `*.bat` files exactly as stored (CRLF).
 

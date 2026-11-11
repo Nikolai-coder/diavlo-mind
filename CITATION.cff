@@ -8,8 +8,8 @@ abstract: >-
   an eight-task benchmark with hidden checks and the results of a 96-run pilot.
 authors:
   - name: "Diavlo"
-version: "1.0.0"
-date-released: "2026-11-10"
+version: "1.1.0"
+date-released: "2026-11-11"
 license: MIT
 repository-code: "https://github.com/Nikolai-coder/diavlo-mind"
 url: "https://github.com/Nikolai-coder/diavlo-mind"

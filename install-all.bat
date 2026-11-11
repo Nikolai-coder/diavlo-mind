@@ -25,6 +25,7 @@ goto finish
 echo.
 echo Python 3.9 or later was not found / No encuentro Python 3.9 o superior.
 echo Install it from https://www.python.org/downloads/ and run this file again.
+echo Or run DIAVLO-MIND-Setup.bat: it installs Python for you / o ejecuta DIAVLO-MIND-Setup.bat: instala Python por ti.
 set "RC=1"
 
 :finish

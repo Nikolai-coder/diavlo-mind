@@ -4,7 +4,7 @@ description: "Disciplined operating procedure for any non-trivial task. Pins dow
 license: MIT
 compatibility: "Any Agent Skills client (Claude Code, Codex, Gemini CLI, Antigravity, claude.ai, ChatGPT). Bundled scripts are optional and need only Python 3.9+ with no extra packages."
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   edition: "fable"
   author: "Diavlo"
 ---

@@ -1,4 +1,4 @@
-# DIAVLO MIND v1.0.0 — full reference bundle
+# DIAVLO MIND v1.1.0 — full reference bundle
 
 GENERATED FILE — do not edit. Rebuild with `python scripts/build_prompts.py`.
 

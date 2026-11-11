@@ -28,6 +28,14 @@ Todo lo que sigue está implementado en este repositorio o marcado como no verif
 
 ## Instalar en Claude Code, Codex, Gemini CLI o Antigravity
 
+### Windows: un solo archivo, sin instalar nada antes
+
+[![Descargar DIAVLO-MIND-Setup.bat](https://img.shields.io/badge/Descargar-DIAVLO--MIND--Setup.bat-6f42c1?style=for-the-badge&logo=windows)](https://github.com/Nikolai-coder/diavlo-mind/releases/latest/download/DIAVLO-MIND-Setup.bat)
+
+Descarga [`DIAVLO-MIND-Setup.bat`](https://github.com/Nikolai-coder/diavlo-mind/releases/latest/download/DIAVLO-MIND-Setup.bat) y haz doble clic. Si falta Python 3.9+, instala Python 3.12 para tu usuario (con winget o con el instalador firmado de python.org), descarga la última versión e instala DIAVLO MIND en cada herramienta de IA que encuentre. No necesita permisos de administrador; opciones como `--dry-run`, `--lang es` y `--uninstall` funcionan igual que en `install-all.bat`. Windows puede mostrar un aviso de SmartScreen al ser un `.bat` descargado: elige *Más información → Ejecutar de todas formas*, o léelo antes; es texto plano.
+
+### Cualquier sistema, desde el repositorio
+
 ```bash
 git clone https://github.com/Nikolai-coder/diavlo-mind
 cd diavlo-mind

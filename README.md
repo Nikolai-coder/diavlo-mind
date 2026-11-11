@@ -28,6 +28,14 @@ Everything below is either implemented in this repository or marked as not verif
 
 ## Install in Claude Code, Codex, Gemini CLI or Antigravity
 
+### Windows: one file, nothing to install first
+
+[![Download DIAVLO-MIND-Setup.bat](https://img.shields.io/badge/Download-DIAVLO--MIND--Setup.bat-6f42c1?style=for-the-badge&logo=windows)](https://github.com/Nikolai-coder/diavlo-mind/releases/latest/download/DIAVLO-MIND-Setup.bat)
+
+Download [`DIAVLO-MIND-Setup.bat`](https://github.com/Nikolai-coder/diavlo-mind/releases/latest/download/DIAVLO-MIND-Setup.bat) and double-click it. If Python 3.9+ is missing it installs Python 3.12 for your user (winget, or the signed python.org installer), downloads the latest release and installs DIAVLO MIND in every AI tool it finds. No administrator rights; options such as `--dry-run`, `--lang es` and `--uninstall` work as in `install-all.bat`. Windows may show a SmartScreen warning for a downloaded `.bat`: choose *More info → Run anyway*, or read the file first; it is plain text.
+
+### Any system, from the repository
+
 ```bash
 git clone https://github.com/Nikolai-coder/diavlo-mind
 cd diavlo-mind

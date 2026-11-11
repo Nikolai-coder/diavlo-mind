@@ -6,6 +6,8 @@ DIAVLO MIND is a folder. Installing it means putting that folder where your agen
 
 ## 1. Get the files
 
+**Windows, shortest path:** download [`DIAVLO-MIND-Setup.bat`](https://github.com/Nikolai-coder/diavlo-mind/releases/latest/download/DIAVLO-MIND-Setup.bat) from the latest release and double-click it. It installs Python 3.12 for your user if no Python 3.9+ is found (winget, or the python.org installer after checking its MD5 checksum and signature), downloads the latest release to `%USERPROFILE%\.diavlo-mind\source` and runs the all-tools installer described in section 2, passing on any option you give it. Run from inside a cloned or unpacked folder, it uses that folder and downloads nothing. That is all; the rest of this section is for the other ways.
+
 ```bash
 git clone https://github.com/Nikolai-coder/diavlo-mind
 cd diavlo-mind
