@@ -103,7 +103,9 @@ class HelperTests(unittest.TestCase):
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
         notes = pg.release_notes(ROOT, version, "octo-test", "diavlo-mind")
         self.assertIn("git clone https://github.com/octo-test/diavlo-mind", notes)
-        self.assertIn("### Added", notes)
+        changes = pg.changelog_section((ROOT / "CHANGELOG.md").read_text(encoding="utf-8"), version)
+        self.assertTrue(changes, "CHANGELOG.md needs a section for " + version)
+        self.assertIn(changes, notes)
 
     def test_noreply_identity_never_uses_a_private_address(self):
         self.assertEqual(pg.noreply_identity("octo-test", "12345"), ("octo-test", "12345+octo-test@users.noreply.github.com"))

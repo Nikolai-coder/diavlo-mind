@@ -183,9 +183,9 @@ def release_notes(root: Path, version: str, owner: str, repo: str) -> str:
         "python scripts/install.py claude-code      # or: codex | gemini-cli | antigravity | agents\n"
         "```\n\n"
         f"**Windows, one click:** download `DIAVLO-MIND-Setup.bat` and double-click it. It installs Python 3.9+ "
-        "for your user if it is missing, downloads this release and installs DIAVLO MIND in every AI tool it finds.\n\n"
+        "for your user if it is missing, downloads this release and installs DIAVLO MIND in every AI tool it finds and prepares the plugin for the Claude app.\n\n"
         "`DIAVLO-MIND-FABLE-EDITION.zip` is the whole project. `diavlo-mind.zip` is the skill alone, "
-        "for hosts where you upload a skill archive. Checksums are in `SHA256SUMS.txt`.\n"
+        "for hosts where you upload a skill archive. `diavlo-mind-plugin.zip` is the plugin for the Claude app (Customize > Plugins > Add > Upload plugin). Checksums are in `SHA256SUMS.txt`.\n"
     )
     return f"{install}\n{body}\n" if body else install
 

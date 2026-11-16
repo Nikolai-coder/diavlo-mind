@@ -37,6 +37,7 @@
     "assets": [
       "dist/DIAVLO-MIND-FABLE-EDITION.zip",
       "dist/diavlo-mind.zip",
+      "dist/diavlo-mind-plugin.zip",
       "dist/SHA256SUMS.txt",
       "DIAVLO-MIND-Setup.bat"
     ]

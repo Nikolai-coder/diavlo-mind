@@ -1,6 +1,6 @@
 @echo off
 rem DIAVLO MIND - installs the skill and the "use it by default" rule in every AI tool found on this PC.
-rem   install-all.bat                 tools found on this computer
+rem   install-all.bat                 tools found on this computer; also prepares the plugin for the Claude app
 rem   install-all.bat --dry-run       show everything, write nothing
 rem   install-all.bat --lang es       the rule in Spanish
 rem   install-all.bat --all           all four tools, found or not

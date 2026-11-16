@@ -25,6 +25,9 @@ Global instruction files, as each vendor documents them (see adapters/):
   Gemini CLI     ~/.gemini/GEMINI.md
   Antigravity    ~/.gemini/GEMINI.md  (the same file: it is written once)
 
+Once per computer, unless --rules-only or --uninstall, it also writes the plugin for the Claude app (chat,
+Cowork) to ~/.diavlo-mind/claude-app/diavlo-mind-plugin.zip and prints the steps to upload it there.
+
 A rule in an instruction file is an instruction to the model, not a switch: the tool follows it almost
 always, not every time. Python 3.9+, standard library only, no network.
 """
@@ -44,6 +47,7 @@ from typing import Callable, Dict, List, Optional, Tuple
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import install as dm_install  # noqa: E402
+import package as dm_package  # noqa: E402
 
 MARK_BEGIN_PREFIX = "<!-- BEGIN DIAVLO-MIND"
 MARK_BEGIN = MARK_BEGIN_PREFIX + " (managed by scripts/install_all.py; write outside these marks) -->"
@@ -83,6 +87,12 @@ MSG = {
         "found": "found ({evidence})",
         "missing": "not found",
         "none": "No AI tool found. Choose with --hosts claude-code,codex,gemini-cli,antigravity or use --all.",
+        "none_local": "No AI tool found on this computer (Claude Code, Codex, Gemini CLI or Antigravity), so nothing is installed in them. The Claude app plugin is prepared below.",
+        "app_title": "Claude app (chat and Cowork), once:",
+        "app_steps": "  1. Open https://claude.ai/customize/plugins\n  2. Click Add > Upload plugin and choose this file:\n     {path}\n  3. In Settings > Capabilities, turn on \"Code execution and file creation\".\n  4. In any chat type / and pick diavlo-mind-setup: Claude checks the rest and guides you.\n  To update later: open the plugin, menu > Remove, then upload the new file.",
+        "app_built": "plugin written.",
+        "app_dry": "would write the plugin: {path}",
+        "app_removed": "Claude app plugin removed: {path}",
         "unknown_host": "Unknown tool: {name}. Valid: {valid}.",
         "rule_text": "Rule written, between marks, in each instruction file (the part in parentheses changes per tool):",
         "dry": "DRY RUN: nothing is written.",
@@ -106,6 +116,7 @@ MSG = {
         "rule_skipped": "rule skipped (--no-rules)",
         "shared": "(same file as {other})",
         "done_ok": "Done. Open a NEW session in each tool so it reads the rule and the skill.",
+        "done_app_only": "Done. What is left is uploading the plugin to the Claude app (steps above).",
         "done_bad": "Finished with problems: read the lines marked NOT above.",
         "undo": "To undo: run the same command with --uninstall. Backups are next to each file (.bak-<time>).",
         "dry_done": "Dry run finished. Run again without --dry-run to apply.",
@@ -115,6 +126,12 @@ MSG = {
         "found": "encontrada ({evidence})",
         "missing": "no encontrada",
         "none": "No encuentro ninguna herramienta de IA. Elige con --hosts claude-code,codex,gemini-cli,antigravity o usa --all.",
+        "none_local": "No encuentro ninguna herramienta de IA en este equipo (Claude Code, Codex, Gemini CLI o Antigravity), así que no instalo nada en ellas. Abajo queda preparado el plugin para la app de Claude.",
+        "app_title": "App de Claude (chat y Cowork), una vez:",
+        "app_steps": "  1. Abre https://claude.ai/customize/plugins\n  2. Pulsa Añadir (Add) > Subir plugin (Upload plugin) y elige este archivo:\n     {path}\n  3. En Ajustes > Capacidades, activa «Ejecución de código y creación de archivos» (Code execution and file creation).\n  4. En cualquier chat escribe / y elige diavlo-mind-setup: Claude comprueba lo demás y te guía.\n  Para actualizar después: abre el plugin, menú > Remove, y sube el archivo nuevo.",
+        "app_built": "plugin escrito.",
+        "app_dry": "se escribiría el plugin: {path}",
+        "app_removed": "plugin de la app de Claude quitado: {path}",
         "unknown_host": "Herramienta desconocida: {name}. Válidas: {valid}.",
         "rule_text": "Regla que se escribe, entre marcas, en cada archivo de instrucciones (lo que va entre paréntesis cambia según la herramienta):",
         "dry": "PRUEBA EN SECO: no se escribe nada.",
@@ -138,6 +155,7 @@ MSG = {
         "rule_skipped": "regla omitida (--no-rules)",
         "shared": "(mismo archivo que {other})",
         "done_ok": "Hecho. Abre una sesión NUEVA en cada herramienta para que lea la regla y la skill.",
+        "done_app_only": "Hecho. Lo que queda es subir el plugin a la app de Claude (pasos de arriba).",
         "done_bad": "Terminó con problemas: lee las líneas marcadas con NO más arriba.",
         "undo": "Para deshacerlo: el mismo comando con --uninstall. Las copias están junto a cada archivo (.bak-<hora>).",
         "dry_done": "Prueba en seco terminada. Ejecuta otra vez sin --dry-run para aplicar.",
@@ -395,8 +413,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--executor-model", help="model for executor, researcher, validator and optimizer agents")
     parser.add_argument("--advisor-model", help="model for architect, planner, reviewer and orchestrator agents")
     parser.add_argument("--dry-run", action="store_true", help="show what would happen and write nothing")
-    parser.add_argument("--uninstall", action="store_true", help="remove the skills and the rule")
+    parser.add_argument("--uninstall", action="store_true", help="remove the skills, the rule and the Claude app plugin file")
     return parser
+
+
+def app_plugin() -> Path:
+    """Where the plugin for the Claude app is written: a folder of our own, so --uninstall can remove it."""
+    return dm_install.home() / ".diavlo-mind" / "claude-app" / dm_package.PLUGIN_ZIP
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -415,11 +438,13 @@ def main(argv: Optional[List[str]] = None) -> int:
         print(f"  {host.label:<12} {shown}")
     selected = choose(args, lang)
     if not selected:
-        print("\n" + tr(lang, "none"))
-        return 1
+        if args.hosts:  # an explicit --hosts list that names no valid tool is an error
+            print("\n" + tr(lang, "none"))
+            return 1
+        print("\n" + tr(lang, "none_local"))
     if args.dry_run:
         print("\n" + tr(lang, "dry"))
-    if not args.uninstall and not args.no_rules:
+    if selected and not args.uninstall and not args.no_rules:
         print("\n" + tr(lang, "rule_text"))
         for line in render_block(selected[0], lang).splitlines():
             print("  | " + line)
@@ -455,11 +480,33 @@ def main(argv: Optional[List[str]] = None) -> int:
         ok_all &= ok
         print("  " + line)
 
+    target = app_plugin()
+    if args.uninstall:
+        if target.is_file() and not args.dry_run:
+            target.unlink()
+            with contextlib.suppress(OSError):  # only removes folders that are empty by now
+                target.parent.rmdir()
+                target.parent.parent.rmdir()
+            print("\n" + tr(lang, "app_removed", path=str(target)))
+    elif not args.rules_only:
+        print("\n" + tr(lang, "app_title"))
+        if args.dry_run:
+            print("  " + tr(lang, "app_dry", path=str(target)))
+        else:
+            try:
+                target.parent.mkdir(parents=True, exist_ok=True)
+                dm_package.write_plugin(target)
+                print("  " + tr(lang, "app_built", path=str(target)))
+            except OSError as problem:
+                ok_all = False
+                print("  " + tr(lang, "oserror", why=str(problem)))
+        print(tr(lang, "app_steps", path=str(target)))
+
     print()
     if args.dry_run:
         print(tr(lang, "dry_done"))
     elif ok_all:
-        print(tr(lang, "done_ok"))
+        print(tr(lang, "done_ok" if selected else "done_app_only"))
     else:
         print(tr(lang, "done_bad"))
     if not args.dry_run and not args.uninstall:

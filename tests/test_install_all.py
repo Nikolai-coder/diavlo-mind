@@ -1,10 +1,12 @@
 """Tests for scripts/install_all.py and install-all.bat: every AI tool at once, with the default-use rule."""
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -12,6 +14,7 @@ SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 import install_all  # noqa: E402
+import package as dm_package  # noqa: E402
 
 PY = sys.executable
 ALL = "claude-code,codex,gemini-cli,antigravity"
@@ -200,6 +203,7 @@ class CommandTests(unittest.TestCase):
     def test_uninstall_removes_skills_agents_rules_and_the_files_it_created(self):
         self.run_all("--hosts", ALL)
         self.run_all("--uninstall", "--all")
+        self.assertFalse((self.home / ".diavlo-mind" / "claude-app").exists())
         for skill in self.skills():
             self.assertFalse(skill.exists(), skill)
         for path in self.rules().values():
@@ -221,8 +225,15 @@ class CommandTests(unittest.TestCase):
         self.assertFalse((self.home / ".gemini").exists())
         self.assertFalse((self.home / ".agents").exists())
 
-    def test_nothing_found_means_nothing_written_and_a_clear_answer(self):
-        out = self.run_all(expect=1)
+    def test_nothing_found_writes_no_tool_files_and_prepares_the_app_plugin(self):
+        out = self.run_all()
+        self.assertIn("No AI tool found on this computer", out)
+        self.assertIn("https://claude.ai/customize/plugins", out)
+        self.assertEqual(sorted(path.name for path in self.home.iterdir()), [".diavlo-mind"])
+        self.assertTrue((self.home / ".diavlo-mind" / "claude-app" / "diavlo-mind-plugin.zip").is_file())
+
+    def test_an_empty_tool_list_still_stops_with_a_clear_answer(self):
+        out = self.run_all("--hosts", ",", expect=1)
         self.assertIn("No AI tool found", out)
         self.assertEqual(list(self.home.iterdir()), [])
 
@@ -264,7 +275,7 @@ class CommandTests(unittest.TestCase):
         self.assertIn('model = "gpt-test"', (self.home / ".codex" / "agents" / "dm-executor.toml").read_text(encoding="utf-8"))
 
     def test_unknown_tool_is_an_error(self):
-        out = subprocess.run([PY, str(SCRIPTS / "install_all.py"), "--hosts", "emacs"], capture_output=True, text=True,
+        out = subprocess.run([PY, str(SCRIPTS / "install_all.py"), "--lang", "en", "--hosts", "emacs"], capture_output=True, text=True,
                              env=dict(os.environ, DM_HOME=str(self.home)))
         self.assertNotEqual(out.returncode, 0)
         self.assertIn("Unknown tool", out.stderr + out.stdout)
@@ -362,6 +373,50 @@ class SetupBatchFileTests(unittest.TestCase):
         self.assertTrue((source / "scripts" / "install_all.py").is_file())
         self.assertIn("DRY RUN", out.stdout)
         self.assertFalse((root / "home").exists(), "a dry run writes nothing in the home folder")
+
+
+class ClaudeAppPluginTests(unittest.TestCase):
+    """The plugin zip for Claude's app (Customize > Plugins > Upload plugin), read by chat, Cowork and Claude Code."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.target = Path(cls.tmp.name) / "diavlo-mind-plugin.zip"
+        dm_package.write_plugin(cls.target)
+        with zipfile.ZipFile(cls.target) as archive:
+            cls.names = archive.namelist()
+            cls.manifest = json.loads(archive.read(".claude-plugin/plugin.json").decode("utf-8"))
+            cls.skill = archive.read("skills/diavlo-mind/SKILL.md").decode("utf-8")
+            cls.setup = archive.read("skills/diavlo-mind-setup/SKILL.md").decode("utf-8")
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def test_layout_is_the_one_the_plugin_docs_describe(self):
+        for name in (".claude-plugin/plugin.json", "skills/diavlo-mind/SKILL.md",
+                     "skills/diavlo-mind-setup/SKILL.md", "agents/dm-architect.md"):
+            self.assertIn(name, self.names)
+        self.assertTrue(all(name.startswith((".claude-plugin/", "skills/", "agents/")) for name in self.names))
+        self.assertFalse([name for name in self.names
+                          if "__pycache__" in name or "/evaluation/" in name or "/.git/" in name])
+
+    def test_manifest_is_the_repository_manifest_and_has_the_same_version(self):
+        repo = json.loads((ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        self.assertEqual(self.manifest, repo)
+        self.assertEqual(self.manifest["name"], "diavlo-mind")
+        self.assertEqual(self.manifest["version"], (ROOT / "VERSION").read_text(encoding="utf-8").strip())
+
+    def test_every_file_the_skill_names_is_inside_the_plugin(self):
+        pattern = r"`((?:agents|workflows|scripts|memory|prompts|adapters)/[\w./-]+\.(?:md|py|json|csv|yaml|txt))`"
+        referenced = set(re.findall(pattern, self.skill))
+        self.assertTrue(referenced)
+        for ref in referenced:
+            self.assertIn(f"skills/diavlo-mind/{ref}", self.names, ref)
+
+    def test_setup_skill_is_named_like_its_folder_and_has_a_description(self):
+        self.assertIn("\nname: diavlo-mind-setup\n", "\n" + self.setup)
+        self.assertRegex(self.setup, r'\ndescription: "[^"\n]+"\n')
 
 
 if __name__ == "__main__":

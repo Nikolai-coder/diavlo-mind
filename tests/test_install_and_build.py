@@ -230,6 +230,10 @@ class PackageAndImproveTests(unittest.TestCase):
         self.assertIn("diavlo-mind/SKILL.md", lean)
         self.assertFalse(any(n.startswith("diavlo-mind/evaluation/") for n in lean))
         self.assertLess((ROOT / "dist" / "diavlo-mind.zip").stat().st_size, 30 * 1024 * 1024, "Skills API upload limit")
+        with zipfile.ZipFile(ROOT / "dist" / "diavlo-mind-plugin.zip") as archive:
+            plugin = archive.namelist()
+        self.assertIn(".claude-plugin/plugin.json", plugin)
+        self.assertIn("skills/diavlo-mind-setup/SKILL.md", plugin)
 
     def test_improvement_log_requires_evidence_to_accept(self):
         with tempfile.TemporaryDirectory() as tmp:

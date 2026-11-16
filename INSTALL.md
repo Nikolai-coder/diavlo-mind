@@ -23,7 +23,7 @@ On Windows, double-click `install-all.bat` or run it from a terminal. On macOS a
 
 ```bash
 install-all.bat --dry-run       # first: show what it would do, write nothing
-install-all.bat                 # install in the tools found on this computer
+install-all.bat                 # install in the tools found on this computer; also prepares the plugin for the Claude app
 install-all.bat --lang es       # write the rule in Spanish (default: the system language)
 install-all.bat --all           # all four tools, found or not
 install-all.bat --uninstall     # remove the skills and the rule
@@ -109,6 +109,8 @@ python scripts/package.py      # writes dist/diavlo-mind.zip
 ```
 
 Upload `dist/diavlo-mind.zip` where the product manages skills. The archive contains one folder, `diavlo-mind/`, with `SKILL.md` directly inside.
+
+**Claude app (chat and Cowork):** upload `dist/diavlo-mind-plugin.zip` in Customize > Plugins > Add > Upload plugin. It holds the skill, the setup skill `diavlo-mind-setup` (it checks code execution and runs a test task) and the role agents. The installer writes the same file to `~/.diavlo-mind/claude-app/`.
 
 ### Any model with one instruction field
 

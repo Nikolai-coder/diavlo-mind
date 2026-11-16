@@ -4,6 +4,18 @@ All notable changes to DIAVLO MIND are recorded here. Versions follow semantic v
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-11-16
+
+### Added
+
+- **Plugin for the Claude app** — `dist/diavlo-mind-plugin.zip`, also attached to each release. It is the folder layout the app reads from Customize > Plugins > Add > Upload plugin: `.claude-plugin/plugin.json`, the skill under `skills/diavlo-mind/`, the setup skill under `skills/diavlo-mind-setup/` and the eight role agents under `agents/`. Verified: layout and manifest tests, every file the skill names exists inside the plugin, and the plugin folder passes `claude plugin validate`. Not verified: the upload itself in the Claude app.
+- **`diavlo-mind-setup` skill** — checks that the plugin is loaded, that code execution is on, runs a real multi-step task and explains how to update.
+- The installer writes that plugin to `~/.diavlo-mind/claude-app/`, prints the steps to upload it and removes it on `--uninstall`.
+
+### Fixed
+
+- The Windows setup no longer ends with "not found" when no AI tool is detected: it installs for the tools it finds, prepares the Claude app plugin and exits normally.
+
 ## [1.1.0] — 2026-11-11
 
 ### Added

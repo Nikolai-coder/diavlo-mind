@@ -2,7 +2,7 @@
 rem DIAVLO MIND - Windows setup: installs what DIAVLO MIND needs, then DIAVLO MIND itself.
 rem Download this one file from the Releases page and double-click it, or run it from the repository folder.
 rem
-rem   DIAVLO-MIND-Setup.bat                 install in the AI tools found on this computer
+rem   DIAVLO-MIND-Setup.bat                 install in the AI tools found on this computer, and prepare the plugin for the Claude app
 rem   DIAVLO-MIND-Setup.bat --dry-run       show what the installer would write (Python and the download still happen)
 rem   DIAVLO-MIND-Setup.bat --lang es       the rule in Spanish
 rem   DIAVLO-MIND-Setup.bat --all           all four tools, found or not
