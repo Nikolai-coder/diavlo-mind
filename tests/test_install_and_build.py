@@ -234,6 +234,7 @@ class PackageAndImproveTests(unittest.TestCase):
             plugin = archive.namelist()
         self.assertIn(".claude-plugin/plugin.json", plugin)
         self.assertIn("skills/diavlo-mind-setup/SKILL.md", plugin)
+        self.assertNotIn(b"\r", (ROOT / "dist" / "SHA256SUMS.txt").read_bytes(), "checksums must use LF line endings")
 
     def test_improvement_log_requires_evidence_to_accept(self):
         with tempfile.TemporaryDirectory() as tmp:

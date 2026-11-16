@@ -4,6 +4,10 @@ All notable changes to DIAVLO MIND are recorded here. Versions follow semantic v
 
 ## [Unreleased]
 
+### Fixed
+
+- `dist/SHA256SUMS.txt` is written with LF line endings on every platform. On Windows the 1.2.0 file had CRLF, which made `sha256sum -c` fail on Linux and macOS. The 1.2.0 release file was re-uploaded with the same hashes; its zips did not change.
+
 ## [1.2.0] — 2026-11-16
 
 ### Added

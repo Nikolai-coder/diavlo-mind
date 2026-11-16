@@ -146,7 +146,9 @@ def main() -> int:
     digest = sha256(plugin)
     sums.append(f"{digest}  {plugin.name}")
     print(f"{plugin.relative_to(ROOT).as_posix()}: {count} files, {plugin.stat().st_size / 1024:.0f} KB, sha256 {digest[:16]}…")
-    (DIST / "SHA256SUMS.txt").write_text("\n".join(sums) + "\n", encoding="utf-8")
+    # LF on every platform: write_text would add CRLF on Windows, and sha256sum -c cannot read that
+    with (DIST / "SHA256SUMS.txt").open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write("\n".join(sums) + "\n")
     print(f"{(DIST / 'SHA256SUMS.txt').relative_to(ROOT).as_posix()} written")
     return 0
 
